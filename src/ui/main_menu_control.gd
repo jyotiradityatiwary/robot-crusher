@@ -9,6 +9,7 @@ const SERVER_MAX_CLIENTS: int = 4
 	# Must use this same compression mode on client also
 const SERVER_COMPRESSION_MODE: ENetConnection.CompressionMode = \
 	ENetConnection.COMPRESS_NONE
+const SPAWN_MARKER_HORIZONTAL_SHIFT: float = 300.0
 
 # Script wide constants
 	# RPC Transfer Channels
@@ -62,22 +63,27 @@ func announce_player_info():
 
 @rpc("authority", "call_local", "reliable", TransferChannels.SERVER_MESSAGES)
 func start_game():
-	var scene = load(GAME_SCENE_PATH).instantiate()
-	get_tree().root.add_child(scene)
+	var game_scene: Node2D = load(GAME_SCENE_PATH).instantiate()
+	#var spawn_point_marker: Marker2D = game_scene.chi
+	get_tree().root.add_child(game_scene)
 	self.hide()
-	print(game_manager.players)
-
-#@rpc("any_peer", "call_remote", "reliable", TransferChannels.SERVER_MESSAGES)
-#func send_player_information(id: int, player_name: String, robot_name: GameManager.RobotName):
-	#if not game_manager.players.has(id):
-		#game_manager.players[id] = {
-			#"name" : player_name,
-			#"robot_name" : robot_name,
-			#"score" : 0
-		#}
-		#
-		#if multiplayer.is_server():
-			#send_player_information.rpc(id, name, robot_name)
+	var spawn_marker: Marker2D = $/root/World/SpawnPoint
+	var my_id: int = multiplayer.get_unique_id()
+	for player_id in game_manager.players:
+		var player: GameManager.GamePlayer = game_manager.players[player_id]
+		var player_scene: PackedScene = load(GameManager.scene_from_robot_type[player.robot_type])
+		var player_node: CharacterBody2D = player_scene.instantiate()
+		player_node.player_name = player.name
+		var  multiplayer_synchronizer: MultiplayerSynchronizer = player_node. \
+			find_child("MultiplayerSynchronizer", false)
+		multiplayer_synchronizer.set_multiplayer_authority(player_id)
+		if my_id == player_id:
+			player_node.is_locally_controlled = true
+			player_node.add_child(Camera2D.new())
+		player_node.global_position = spawn_marker.global_position
+		spawn_marker.global_position.x += SPAWN_MARKER_HORIZONTAL_SHIFT
+		game_scene.add_child(player_node)
+		
 
 @rpc("any_peer", "call_remote", "reliable", TransferChannels.SERVER_MESSAGES)
 func initialize_player_on_server(id: int, player_name: String, robot_type: GameManager.RobotType):

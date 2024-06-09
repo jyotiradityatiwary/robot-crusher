@@ -10,6 +10,10 @@ static func get_name_of_robot_type(robot_type: RobotType) -> String:
 	else:
 		return "Invalid RobotType(" + str(robot_type) + ")"
 
+const scene_from_robot_type: Dictionary = {
+	RobotType.BLUE: "res://src/entities/blue_robot.tscn",
+}
+
 class GamePlayer:
 	var name: String
 	var robot_type: RobotType

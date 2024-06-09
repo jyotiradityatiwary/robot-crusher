@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-
 const MAX_SPEED: float = 1000.0
 const ACCELERATION: float = 5000.0
 const JUMP_MAX_SPEED: float = 1500.0
@@ -11,13 +10,19 @@ const FRICTION: float = 2.0
 const RIGHT_DASH_DIRECTION: Vector2 = Vector2(4,-1)
 const LEFT_DASH_DIRECTION: Vector2 = Vector2(-4, -1)
 
+const robot_type: GameManager.RobotType = GameManager.RobotType.BLUE
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-var jump_charge = 0
-var dash_charge = 0
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+var jump_charge: float = 0.0
+var dash_charge: float = 0.0
+var is_locally_controlled: bool = false
+var player_name: String
 
 func _physics_process(delta):
 	# Add the gravity.
+	if not is_locally_controlled:
+		return
+
 	if is_on_floor():
 		if Input.is_action_pressed("jump"):
 			if jump_charge < 1.0:
