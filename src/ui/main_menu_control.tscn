@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://uiy8veji0j2v"]
+
+[ext_resource type="Script" path="res://src/ui/main_menu_control.gd" id="1_buy1h"]
+
+[node name="MainMenuControl" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_buy1h")
+
+[node name="HostButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 229.0
+offset_top = 262.0
+offset_right = 342.0
+offset_bottom = 326.0
+text = "Host"
+
+[node name="JoinButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 379.0
+offset_top = 258.0
+offset_right = 482.0
+offset_bottom = 328.0
+text = "Join"
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 530.0
+offset_top = 255.0
+offset_right = 634.0
+offset_bottom = 325.0
+text = "Start"
+
+[node name="NameLineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 341.0
+offset_top = 62.0
+offset_right = 736.0
+offset_bottom = 116.0
+placeholder_text = "Name"
+
+[connection signal="pressed" from="HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]

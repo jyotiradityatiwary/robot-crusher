@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Car Crusher"
-run/main_scene="res://src/world/world.tscn"
+run/main_scene="res://src/ui/main_menu_control.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
