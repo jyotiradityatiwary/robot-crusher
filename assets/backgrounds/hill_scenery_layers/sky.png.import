@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b70g786ihrao8"
-path="res://.godot/imported/skill-desc_0000_foreground.png-7dc8ad8256ac1d9fbf40e815b3e02b70.ctex"
+uid="uid://bv6uex3waolmo"
+path="res://.godot/imported/sky.png-31ac4f0ef7b091551d23a5471dc4553c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/backgrounds/industrial_parallax_layers/skill-desc_0000_foreground.png"
-dest_files=["res://.godot/imported/skill-desc_0000_foreground.png-7dc8ad8256ac1d9fbf40e815b3e02b70.ctex"]
+source_file="res://assets/backgrounds/hill_scenery_layers/sky.png"
+dest_files=["res://.godot/imported/sky.png-31ac4f0ef7b091551d23a5471dc4553c.ctex"]
 
 [params]
 

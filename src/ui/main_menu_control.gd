@@ -10,6 +10,7 @@ const SERVER_MAX_CLIENTS: int = 4
 const SERVER_COMPRESSION_MODE: ENetConnection.CompressionMode = \
 	ENetConnection.COMPRESS_NONE
 const SPAWN_MARKER_HORIZONTAL_SHIFT: float = 300.0
+const CAMERA_LIMIT_BOTTOM: int = 720
 
 # Script wide constants
 	# RPC Transfer Channels
@@ -91,7 +92,9 @@ func start_game():
 		if my_id == player_id:
 			# make player locally controlled and attatch a camera node
 			player_node.is_locally_controlled = true
-			player_node.add_child(Camera2D.new())
+			var camera: Camera2D = Camera2D.new()
+			camera.limit_bottom = CAMERA_LIMIT_BOTTOM
+			player_node.add_child(camera)
 		# make player spawn at the spawn marker
 		player_node.global_position = spawn_marker.global_position
 		# shift the spawn marker for spawning next player

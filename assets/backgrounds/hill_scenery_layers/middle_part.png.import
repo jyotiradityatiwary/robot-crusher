@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpun3l13o4ge0"
-path="res://.godot/imported/skill-desc_0002_far-buildings.png-2b15d6f066823903711c314f31641655.ctex"
+uid="uid://cs3yg28cih417"
+path="res://.godot/imported/middle_part.png-e41f2f751d4093e055f58bb79258b713.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/backgrounds/industrial_parallax_layers/skill-desc_0002_far-buildings.png"
-dest_files=["res://.godot/imported/skill-desc_0002_far-buildings.png-2b15d6f066823903711c314f31641655.ctex"]
+source_file="res://assets/backgrounds/hill_scenery_layers/middle_part.png"
+dest_files=["res://.godot/imported/middle_part.png-e41f2f751d4093e055f58bb79258b713.ctex"]
 
 [params]
 

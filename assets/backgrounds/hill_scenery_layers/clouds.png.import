@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chdvmktkfp1qg"
-path="res://.godot/imported/skill-desc_0001_buildings.png-01df846e53f6a192b1f191953e925ea0.ctex"
+uid="uid://df5gkejrecgl1"
+path="res://.godot/imported/clouds.png-224592805021a347ae3623eafed7def1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/backgrounds/industrial_parallax_layers/skill-desc_0001_buildings.png"
-dest_files=["res://.godot/imported/skill-desc_0001_buildings.png-01df846e53f6a192b1f191953e925ea0.ctex"]
+source_file="res://assets/backgrounds/hill_scenery_layers/clouds.png"
+dest_files=["res://.godot/imported/clouds.png-224592805021a347ae3623eafed7def1.ctex"]
 
 [params]
 
