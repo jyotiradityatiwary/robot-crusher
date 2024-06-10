@@ -9,6 +9,7 @@ const DASH_CHARGE_RATE: float = 0.50
 const FRICTION: float = 2.0
 const RIGHT_DASH_DIRECTION: Vector2 = Vector2(4,-1)
 const LEFT_DASH_DIRECTION: Vector2 = Vector2(-4, -1)
+const POSITION_LERP_WEIGHT: float = 0.8
 
 const robot_type: GameManager.RobotType = GameManager.RobotType.BLUE
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -17,10 +18,12 @@ var jump_charge: float = 0.0
 var dash_charge: float = 0.0
 var is_locally_controlled: bool = false
 var player_name: String
+var synced_global_position: Vector2 = self.global_position
 
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_locally_controlled:
+		global_position = global_position.lerp(synced_global_position, POSITION_LERP_WEIGHT)
 		return
 
 	if is_on_floor():
@@ -50,3 +53,4 @@ func _physics_process(delta):
 		dash_charge = 0
 	
 	move_and_slide()
+	synced_global_position = self.global_position
