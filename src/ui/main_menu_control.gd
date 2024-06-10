@@ -61,30 +61,46 @@ func announce_player_info():
 		initialize_player_on_server.rpc_id(SERVER_PEER_ID, \
 			multiplayer.get_unique_id(), player_name, robot_type)
 
+# Start game in all clients and host
 @rpc("authority", "call_local", "reliable", TransferChannels.SERVER_MESSAGES)
 func start_game():
+	# Load game scene
 	var game_scene: Node2D = load(GAME_SCENE_PATH).instantiate()
-	#var spawn_point_marker: Marker2D = game_scene.chi
+	# Make game scene visible
 	get_tree().root.add_child(game_scene)
+	# Hide the main menu
 	self.hide()
-	var spawn_marker: Marker2D = $/root/World/SpawnPoint
+	# Get spawn marker from the game scene
+	var spawn_marker: Marker2D = game_scene.find_child("SpawnMarker", false)
 	var my_id: int = multiplayer.get_unique_id()
+	# Spawn and setup a player for each peer
 	for player_id in game_manager.players:
+		# Get player object from array
 		var player: GameManager.GamePlayer = game_manager.players[player_id]
 		var player_scene: PackedScene = load(GameManager.scene_from_robot_type[player.robot_type])
+		# instantiate node for corresponding player object
 		var player_node: CharacterBody2D = player_scene.instantiate()
+		# assign player_name to player node
 		player_node.player_name = player.name
-		var  multiplayer_synchronizer: MultiplayerSynchronizer = player_node. \
+		# get multiplayer synchronizer node of corresponding player node
+		var multiplayer_synchronizer: MultiplayerSynchronizer = player_node. \
 			find_child("MultiplayerSynchronizer", false)
+		# make the corresponding player's id the authority for controlling this
+		# 	player node
 		multiplayer_synchronizer.set_multiplayer_authority(player_id)
 		if my_id == player_id:
+			# make player locally controlled and attatch a camera node
 			player_node.is_locally_controlled = true
 			player_node.add_child(Camera2D.new())
+		# make player spawn at the spawn marker
 		player_node.global_position = spawn_marker.global_position
+		# shift the spawn marker for spawning next player
 		spawn_marker.global_position.x += SPAWN_MARKER_HORIZONTAL_SHIFT
+		# make the player show up
 		game_scene.add_child(player_node)
 		
 
+# The client calls this whenever it connects to the server
 @rpc("any_peer", "call_remote", "reliable", TransferChannels.SERVER_MESSAGES)
 func initialize_player_on_server(id: int, player_name: String, robot_type: GameManager.RobotType):
 	# Initialize existing players on the new peer
@@ -95,6 +111,7 @@ func initialize_player_on_server(id: int, player_name: String, robot_type: GameM
 	game_manager.add_player(id, GameManager.GamePlayer.create(player_name, robot_type))
 	initialize_plyaer_on_client.rpc(id, player_name, robot_type)
 
+# Server calls this to all clients after a new client connects to server
 @rpc("authority", "call_remote", "reliable", TransferChannels.SERVER_MESSAGES)
 func initialize_plyaer_on_client(id: int, player_name: String, robot_type: GameManager.RobotType):
 	game_manager.add_player(id, GameManager.GamePlayer.create(player_name, robot_type))
