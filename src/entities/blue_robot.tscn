@@ -1,7 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://gg7phinjmsaj"]
+[gd_scene load_steps=13 format=3 uid="uid://gg7phinjmsaj"]
 
 [ext_resource type="Texture2D" uid="uid://y1m8ucm10c7s" path="res://assets/robots/side_view/robot_blueDrive1.png" id="1_r5y52"]
 [ext_resource type="Script" path="res://src/entities/blue_robot.gd" id="1_yjd2e"]
+[ext_resource type="Script" path="res://src/global/state_machine.gd" id="3_j1cek"]
+[ext_resource type="Script" path="res://src/global/states/freefall_state.gd" id="4_qktf7"]
+[ext_resource type="Script" path="res://src/global/states/sliding_state.gd" id="5_d0pim"]
+[ext_resource type="Script" path="res://src/global/states/jumping_state.gd" id="6_xl3n5"]
+[ext_resource type="Script" path="res://src/global/states/dash_charging_state.gd" id="7_efqa4"]
+[ext_resource type="Script" path="res://src/global/state.gd" id="8_l62dp"]
+[ext_resource type="Script" path="res://src/global/states/local_controlled_state.gd" id="8_yq1rf"]
+[ext_resource type="Script" path="res://src/global/states/remote_controlled_state.gd" id="9_s6bkb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3y1r4"]
 size = Vector2(158, 150)
@@ -11,8 +19,10 @@ properties/0/path = NodePath(".:synced_global_position")
 properties/0/spawn = false
 properties/0/replication_mode = 1
 
-[node name="BlueRobot" type="CharacterBody2D"]
+[node name="BlueRobot" type="CharacterBody2D" node_paths=PackedStringArray("local_controlled_state", "free_fall_state")]
 script = ExtResource("1_yjd2e")
+local_controlled_state = NodePath("ControlStateMachine/LocalControlledState")
+free_fall_state = NodePath("MovementStateMachine/FreeFallState")
 
 [node name="RobotBlueDrive1" type="Sprite2D" parent="."]
 position = Vector2(0, -75)
@@ -25,3 +35,38 @@ shape = SubResource("RectangleShape2D_3y1r4")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_interval = 0.01
 replication_config = SubResource("SceneReplicationConfig_6gp2x")
+
+[node name="MovementStateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("3_j1cek")
+starting_state = NodePath("IdleState")
+
+[node name="FreeFallState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("sliding_state")]
+script = ExtResource("4_qktf7")
+sliding_state = NodePath("../SlidingState")
+
+[node name="SlidingState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("free_fall_state", "jumping_state", "dash_charging_state")]
+script = ExtResource("5_d0pim")
+free_fall_state = NodePath("../FreeFallState")
+jumping_state = NodePath("../JumpingState")
+dash_charging_state = NodePath("../DashChargingState")
+
+[node name="JumpingState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("free_fall_state")]
+script = ExtResource("6_xl3n5")
+free_fall_state = NodePath("../FreeFallState")
+
+[node name="DashChargingState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("free_fall_state")]
+script = ExtResource("7_efqa4")
+free_fall_state = NodePath("../FreeFallState")
+
+[node name="IdleState" type="Node" parent="MovementStateMachine"]
+script = ExtResource("8_l62dp")
+
+[node name="ControlStateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("3_j1cek")
+starting_state = NodePath("RemoteControlledState")
+
+[node name="LocalControlledState" type="Node" parent="ControlStateMachine"]
+script = ExtResource("8_yq1rf")
+
+[node name="RemoteControlledState" type="Node" parent="ControlStateMachine"]
+script = ExtResource("9_s6bkb")
