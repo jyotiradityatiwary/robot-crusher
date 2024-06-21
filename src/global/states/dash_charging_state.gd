@@ -21,10 +21,13 @@ func exit() -> void:
 		dash_charge = 1.0
 	var dash_direction: Vector2 = Input.get_vector(MOVE_LEFT_INPUT_NAME, MOVE_RIGHT_INPUT_NAME, \
 		MOVE_UP_INPUT_NAME, MOVE_DOWN_INPUT_NAME).normalized()
-	controlled_node.velocity = dash_charge * DASH_MAX_SPEED * dash_direction
+	controlled_node.velocity += dash_charge * DASH_MAX_SPEED * dash_direction
 	controlled_node.move_and_slide()
 
 func process_physics(delta: float) -> State:
+	if not controlled_node.is_on_floor():
+		dash_charge = 0
+		return free_fall_state
 	if dash_charge < 1.0:
 		dash_charge += DASH_CHARGE_RATE * delta
 	controlled_node.move_and_slide()
