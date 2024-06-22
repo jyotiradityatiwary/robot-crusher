@@ -21,6 +21,7 @@ func exit() -> void:
 		dash_charge = 1.0
 	var dash_direction: Vector2 = Input.get_vector(MOVE_LEFT_INPUT_NAME, MOVE_RIGHT_INPUT_NAME, \
 		MOVE_UP_INPUT_NAME, MOVE_DOWN_INPUT_NAME).normalized()
+	controlled_node.set_is_facing_left(dash_direction.x < 0)
 	controlled_node.velocity += dash_charge * DASH_MAX_SPEED * dash_direction
 	controlled_node.move_and_slide()
 

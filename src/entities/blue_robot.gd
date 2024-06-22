@@ -10,6 +10,8 @@ var synced_global_position: Vector2 = self.global_position
 
 @onready var movement_state_machine: StateMachine = $MovementStateMachine
 @onready var control_state_machine: StateMachine = $ControlStateMachine
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var sprite: Sprite2D = $Sprite2D
 
 func _ready():
 	movement_state_machine.initialize_for(self)
@@ -30,3 +32,6 @@ func _process(delta):
 func _unhandled_input(event):
 	movement_state_machine.process_input(event)
 	control_state_machine.process_input(event)
+
+func set_is_facing_left(is_facing_left: bool):
+	sprite.flip_h = is_facing_left

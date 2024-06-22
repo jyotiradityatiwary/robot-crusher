@@ -12,7 +12,11 @@ const JUMP_INPUT_NAME = &"jump"
 var jump_acceleration: float
 
 func enter() -> void:
+	controlled_node.sprite.texture = preload("res://assets/robots/side_view/robot_blueJump.png")
 	jump_acceleration = INITIAL_JUMP_ACCELERATION
+
+func exit() -> void:
+	controlled_node.sprite.texture = preload("res://assets/robots/side_view/robot_blueDrive1.png")
 
 func process_physics(delta: float) -> State:
 	if jump_acceleration >= 0:
