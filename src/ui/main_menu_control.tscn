@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://uiy8veji0j2v"]
+[gd_scene load_steps=4 format=3 uid="uid://uiy8veji0j2v"]
 
 [ext_resource type="Script" path="res://src/ui/main_menu_control.gd" id="1_buy1h"]
+[ext_resource type="Script" path="res://src/global/multiplayer_manager.gd" id="2_ek1h1"]
+[ext_resource type="PackedScene" uid="uid://bvp3ao1rt4338" path="res://src/world/world.tscn" id="3_xco73"]
 
 [node name="MainMenuControl" type="Control"]
 layout_mode = 3
@@ -42,6 +44,10 @@ offset_top = 62.0
 offset_right = 736.0
 offset_bottom = 116.0
 placeholder_text = "Name"
+
+[node name="MultiplayerManager" type="Node" parent="."]
+script = ExtResource("2_ek1h1")
+game_scene = ExtResource("3_xco73")
 
 [connection signal="pressed" from="HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="JoinButton" to="." method="_on_join_button_pressed"]

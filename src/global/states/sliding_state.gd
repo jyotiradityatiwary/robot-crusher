@@ -26,7 +26,6 @@ func exit():
 
 func process_physics(delta: float) -> State:
 	controlled_node.velocity.x += direction * ACCELERATION * delta
-	print(controlled_node.velocity.x)
 	if not controlled_node.is_on_floor():
 		return free_fall_state
 	controlled_node.move_and_slide()

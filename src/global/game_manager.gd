@@ -1,6 +1,10 @@
 extends Object
 
 class_name GameManager
+# This a Object and not a Node or a RefernceCounted Object Hence must be freed 
+# manually. Not meant to be intefaced directly. The MultiPlayerManager (Node)
+# provides abstraction on top of this class and gandles RPC calls.
+
 
 enum RobotType {BLUE}
 
@@ -18,12 +22,18 @@ class GamePlayer:
 	var name: String
 	var robot_type: RobotType
 	var score: float
-	static func create(_name: String, _robot_type: RobotType) -> GamePlayer:
-		var game_player = GamePlayer.new()
-		game_player.name = _name
-		game_player.robot_type = _robot_type
-		game_player.score = 0.0
-		return game_player
+	#static func create(_name: String, _robot_type: RobotType) -> GamePlayer:
+		#var game_player = GamePlayer.new()
+		#game_player.name = _name
+		#game_player.robot_type = _robot_type
+		#game_player.score = 0.0
+		#return game_player
+	#
+	func _init(_name: String, _robot_type: RobotType):
+		self.name = _name
+		self.robot_type = _robot_type
+		self.score = 0.0
+	
 	func _to_string() -> String:
 		return "GamePlayer(name=\"" + self.name + "\", robot_type=" + \
 			GameManager.get_name_of_robot_type(self.robot_type) + ", score=" + str(self.score)  + \
