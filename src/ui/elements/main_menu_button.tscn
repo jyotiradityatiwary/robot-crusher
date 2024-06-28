@@ -1,0 +1,36 @@
+[gd_scene load_steps=8 format=3 uid="uid://celq8766hxbx8"]
+
+[ext_resource type="FontFile" uid="uid://cwcgrx4vm4bsb" path="res://assets/fonts/WalterTurncoat-Regular.ttf" id="1_87dpf"]
+[ext_resource type="Script" path="res://src/ui/elements/main_menu_button.gd" id="2_acqai"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_drkl3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_25dp1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wg47o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2myse"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jxdu7"]
+
+[node name="MainMenuButton" type="Button"]
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.729412, 0.0235294, 0.333333, 1)
+theme_override_colors/font_hover_color = Color(0.729412, 0.0235294, 0.333333, 1)
+theme_override_colors/font_focus_color = Color(0.729412, 0.0235294, 0.333333, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.729412, 0.0235294, 0.333333, 0.682353)
+theme_override_colors/font_disabled_color = Color(0.298039, 0.290196, 0.266667, 0.772549)
+theme_override_fonts/font = ExtResource("1_87dpf")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxEmpty_drkl3")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_25dp1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wg47o")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_2myse")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jxdu7")
+text = "Button Label"
+script = ExtResource("2_acqai")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

@@ -5,8 +5,6 @@ class_name MultiplayerManager
 	# Must use this same compression mode on client also
 @export var server_compression_mode: ENetConnection.CompressionMode = \
 	ENetConnection.COMPRESS_NONE
-@export var spawn_marker_horizontal_shift: float = 300.0
-@export var camera_limit_bottom: int = 720
 @export var game_scene: PackedScene
 
 # Script wide constants
@@ -86,8 +84,18 @@ func start_game_for_everyone() -> void:
 	if not top_level_node.multiplayer.is_server():
 		print("Error: Only server can start the game. We are not a server.")
 		return
-	start_game.rpc()
 
+	_start_game_on_client.rpc()
+	
+	var game_scene_node: Node2D = $/root/World
+	var multiplayer_spawner: MultiplayerSpawner = game_scene_node.find_child("RobotMultiplayerSpawner", false)
+	
+	## Spawn and setup a player for each peer
+	for player_id in game_manager.players:
+		# Get player object from array
+		var player_data: GameManager.GamePlayer = game_manager.players[player_id]
+		print("i am about to call spawn with args id=", player_id, ", pldata=", player_data)
+		multiplayer_spawner.spawn([player_id, player_data.name, player_data.robot_type])
 
 func announce_player_info() -> void:
 	if top_level_node.multiplayer.is_server():
@@ -102,49 +110,14 @@ func announce_player_info() -> void:
 
 # Start game in all clients and host
 @rpc("authority", "call_local", "reliable", TransferChannels.SERVER_MESSAGES)
-func start_game() -> void:
-	# Load game scene
+func _start_game_on_client() -> void:
+	#################
+	print("yes")
+	var waiting_screen_node: Control = $/root/WaitingScreen
+	waiting_screen_node.get_parent().remove_child(waiting_screen_node)
+	waiting_screen_node.queue_free()
 	var game_scene_node: Node2D = game_scene.instantiate()
-	
-	# Make game scene visible
-	top_level_node.get_tree().root.add_child(game_scene_node)
-	
-	# Hide the main menu
-	top_level_node.hide()
-	
-	# Get spawn marker from the game scene
-	var spawn_marker: Marker2D = game_scene_node.find_child("SpawnMarker", false)
-	var my_id: int = top_level_node.multiplayer.get_unique_id()
-	
-	# Spawn and setup a player for each peer
-	for player_id in game_manager.players:
-		# Get player object from array
-		var player: GameManager.GamePlayer = game_manager.players[player_id]
-		var player_scene: PackedScene = load( \
-			GameManager.scene_from_robot_type[player.robot_type])
-		# instantiate node for corresponding player object
-		var player_node: CharacterBody2D = player_scene.instantiate()
-		# assign player_name to player node
-		player_node.player_name = player.name
-		# get multiplayer synchronizer node of corresponding player node
-		var multiplayer_synchronizer: MultiplayerSynchronizer = player_node. \
-			find_child("MultiplayerSynchronizer", false)
-		# make the corresponding player's id the authority for controlling this
-		# 	player node
-		multiplayer_synchronizer.set_multiplayer_authority(player_id)
-		if my_id == player_id:
-			# make player locally controlled and attatch a camera node
-			player_node.is_locally_controlled = true
-			var camera: Camera2D = Camera2D.new()
-			camera.limit_bottom = camera_limit_bottom
-			player_node.add_child(camera)
-		# make player spawn at the spawn marker
-		player_node.global_position = spawn_marker.global_position
-		# shift the spawn marker for spawning next player
-		spawn_marker.global_position.x += spawn_marker_horizontal_shift
-		# make the player show up
-		game_scene_node.add_child(player_node)
-
+	get_tree().root.add_child(game_scene_node)
 
 # The client calls this whenever it connects to the server
 @rpc("any_peer", "call_remote", "reliable", TransferChannels.SERVER_MESSAGES)

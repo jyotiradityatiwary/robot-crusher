@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://vo843d3e2pio"]
+
+[ext_resource type="Texture2D" uid="uid://bv6uex3waolmo" path="res://assets/backgrounds/hill_scenery_layers/sky.png" id="1_6wxj4"]
+[ext_resource type="Script" path="res://src/ui/join_screen.gd" id="1_v1p7m"]
+[ext_resource type="PackedScene" uid="uid://baiw6grki3410" path="res://src/ui/waiting_screen.tscn" id="2_cx410"]
+[ext_resource type="PackedScene" uid="uid://xbojp1nj4v2u" path="res://src/ui/elements/page_title.tscn" id="2_th5mh"]
+[ext_resource type="PackedScene" uid="uid://kyvdstcxwup5" path="res://src/ui/elements/main_menu_label.tscn" id="3_h6sow"]
+[ext_resource type="PackedScene" uid="uid://3af0m2s4xitx" path="res://src/ui/elements/main_menu_text_edit.tscn" id="4_il5wu"]
+[ext_resource type="PackedScene" uid="uid://celq8766hxbx8" path="res://src/ui/elements/main_menu_button.tscn" id="5_tumtu"]
+
+[node name="PlayScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v1p7m")
+waiting_screen = ExtResource("2_cx410")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_6wxj4")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 80
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="PageTitle" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_th5mh")]
+layout_mode = 2
+text = "[center]Join Game[/center]"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 30
+
+[node name="MainMenuLabel" parent="MarginContainer/VBoxContainer/HSplitContainer" instance=ExtResource("3_h6sow")]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_vertical = 4
+text = "ToDo: Input IP"
+
+[node name="IPAddrTextEdit" parent="MarginContainer/VBoxContainer/HSplitContainer" instance=ExtResource("4_il5wu")]
+layout_mode = 2
+text = "127.0.0.1"
+
+[node name="JoinServerButton" parent="MarginContainer/VBoxContainer" instance=ExtResource("5_tumtu")]
+layout_mode = 2
+text = "Join Server"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/JoinServerButton" to="." method="_on_join_server_button_pressed"]

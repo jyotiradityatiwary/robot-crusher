@@ -18,7 +18,6 @@ var direction: float = 0
 
 func enter():
 	controlled_node.animation_player.play(MOVE_ANIMATION_NAME)
-	controlled_node.animation_player.pause()
 	_read_direction_from_input()
 
 func exit():

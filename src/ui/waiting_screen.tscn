@@ -1,0 +1,65 @@
+[gd_scene load_steps=5 format=3 uid="uid://baiw6grki3410"]
+
+[ext_resource type="Script" path="res://src/ui/waiting_screen.gd" id="1_i0tbo"]
+[ext_resource type="Texture2D" uid="uid://bv6uex3waolmo" path="res://assets/backgrounds/hill_scenery_layers/sky.png" id="2_4jpwy"]
+[ext_resource type="PackedScene" uid="uid://kyvdstcxwup5" path="res://src/ui/elements/main_menu_label.tscn" id="4_2xneu"]
+[ext_resource type="PackedScene" uid="uid://celq8766hxbx8" path="res://src/ui/elements/main_menu_button.tscn" id="5_4t1om"]
+
+[node name="WaitingScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i0tbo")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_4jpwy")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 80
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="MainMenuLabel" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_2xneu")]
+custom_minimum_size = Vector2(500, 40)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[center]Waiting for players to join ...[/center]"
+fit_content = true
+
+[node name="MainMenuLabel2" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_2xneu")]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]TO-DO: show connected peers here[/center]"
+
+[node name="StartGameButton" parent="MarginContainer/VBoxContainer" instance=ExtResource("5_4t1om")]
+visible = false
+layout_mode = 2
+text = "Start Game"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/StartGameButton" to="." method="_on_start_game_button_pressed"]

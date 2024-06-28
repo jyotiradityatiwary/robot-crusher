@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://xbojp1nj4v2u"]
+
+[ext_resource type="FontFile" uid="uid://ch6vdb225hvkb" path="res://assets/fonts/Bungee-Regular.ttf" id="1_3l53w"]
+
+[node name="PageTitle" type="RichTextLabel"]
+custom_minimum_size = Vector2(256, 64)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("1_3l53w")
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
+text = "[center]Page Title[/center]"
+fit_content = true

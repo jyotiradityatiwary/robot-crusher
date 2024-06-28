@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://uiy8veji0j2v"]
+[gd_scene load_steps=7 format=3 uid="uid://uiy8veji0j2v"]
 
 [ext_resource type="Script" path="res://src/ui/main_menu_control.gd" id="1_buy1h"]
 [ext_resource type="Script" path="res://src/global/multiplayer_manager.gd" id="2_ek1h1"]
 [ext_resource type="PackedScene" uid="uid://bvp3ao1rt4338" path="res://src/world/world.tscn" id="3_xco73"]
+[ext_resource type="Texture2D" uid="uid://bv6uex3waolmo" path="res://assets/backgrounds/hill_scenery_layers/sky.png" id="4_hao54"]
+[ext_resource type="Texture2D" uid="uid://dtv7fitcd4i7e" path="res://assets/ui/Logo.png" id="5_vowr1"]
+[ext_resource type="Texture2D" uid="uid://crpn67tkeirit" path="res://assets/ui/Robot Crusher Title Screen Icon.png" id="6_auy08"]
 
 [node name="MainMenuControl" type="Control"]
 layout_mode = 3
@@ -14,6 +17,7 @@ grow_vertical = 2
 script = ExtResource("1_buy1h")
 
 [node name="HostButton" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 229.0
 offset_top = 262.0
@@ -22,6 +26,7 @@ offset_bottom = 326.0
 text = "Host"
 
 [node name="JoinButton" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 379.0
 offset_top = 258.0
@@ -30,6 +35,7 @@ offset_bottom = 328.0
 text = "Join"
 
 [node name="StartButton" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 530.0
 offset_top = 255.0
@@ -38,6 +44,7 @@ offset_bottom = 325.0
 text = "Start"
 
 [node name="NameLineEdit" type="LineEdit" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 341.0
 offset_top = 62.0
@@ -48,6 +55,54 @@ placeholder_text = "Name"
 [node name="MultiplayerManager" type="Node" parent="."]
 script = ExtResource("2_ek1h1")
 game_scene = ExtResource("3_xco73")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_hao54")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 80
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VSplitContainer" type="VSplitContainer" parent="MarginContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HSplitContainer/VSplitContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_vowr1")
+expand_mode = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HSplitContainer/CenterContainer"]
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+texture = ExtResource("6_auy08")
+expand_mode = 3
 
 [connection signal="pressed" from="HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="JoinButton" to="." method="_on_join_button_pressed"]

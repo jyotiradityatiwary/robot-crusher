@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://gg7phinjmsaj"]
+[gd_scene load_steps=18 format=3 uid="uid://gg7phinjmsaj"]
 
 [ext_resource type="Texture2D" uid="uid://y1m8ucm10c7s" path="res://assets/robots/side_view/robot_blueDrive1.png" id="1_r5y52"]
 [ext_resource type="Script" path="res://src/entities/blue_robot.gd" id="1_yjd2e"]
@@ -11,14 +11,10 @@
 [ext_resource type="Script" path="res://src/global/states/local_controlled_state.gd" id="8_yq1rf"]
 [ext_resource type="Script" path="res://src/global/states/remote_controlled_state.gd" id="9_s6bkb"]
 [ext_resource type="Texture2D" uid="uid://8wyb015g4j4v" path="res://assets/robots/side_view/robot_blueDrive2.png" id="11_s7lvj"]
+[ext_resource type="Script" path="res://src/entities/robot_multiplayer_data.gd" id="12_i7y4f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3y1r4"]
 size = Vector2(158, 150)
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6gp2x"]
-properties/0/path = NodePath(".:synced_global_position")
-properties/0/spawn = false
-properties/0/replication_mode = 1
 
 [sub_resource type="Animation" id="Animation_3n6ok"]
 length = 0.001
@@ -58,6 +54,11 @@ _data = {
 "move": SubResource("Animation_dbq6y")
 }
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6gp2x"]
+properties/0/path = NodePath("RobotMultiplayerData:global_position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [node name="BlueRobot" type="CharacterBody2D" node_paths=PackedStringArray("local_controlled_state", "free_fall_state")]
 script = ExtResource("1_yjd2e")
 local_controlled_state = NodePath("ControlStateMachine/LocalControlledState")
@@ -70,10 +71,6 @@ texture = ExtResource("1_r5y52")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -75)
 shape = SubResource("RectangleShape2D_3y1r4")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_interval = 0.01
-replication_config = SubResource("SceneReplicationConfig_6gp2x")
 
 [node name="MovementStateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
 script = ExtResource("3_j1cek")
@@ -114,3 +111,11 @@ script = ExtResource("9_s6bkb")
 libraries = {
 "": SubResource("AnimationLibrary_sleau")
 }
+
+[node name="RobotMultiplayerData" type="Node" parent="."]
+script = ExtResource("12_i7y4f")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="RobotMultiplayerData"]
+root_path = NodePath("../..")
+replication_interval = 0.01
+replication_config = SubResource("SceneReplicationConfig_6gp2x")

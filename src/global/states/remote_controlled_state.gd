@@ -7,7 +7,9 @@ class_name RemoteControlledState
 const MULTIPLAYER_POSITION_LERP_WEIGHT: float = 0.7
 
 func process_physics(_delta: float) -> State:
-	controlled_node.global_position = controlled_node.global_position.lerp( \
-		controlled_node.synced_global_position, \
-		MULTIPLAYER_POSITION_LERP_WEIGHT)
+	controlled_node.global_position = controlled_node \
+		.multiplayer_data.global_position.lerp( \
+			controlled_node.multiplayer_data.global_position, \
+			MULTIPLAYER_POSITION_LERP_WEIGHT \
+		)
 	return null

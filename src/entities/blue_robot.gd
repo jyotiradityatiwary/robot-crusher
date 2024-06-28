@@ -3,15 +3,17 @@ extends CharacterBody2D
 @export var local_controlled_state: State
 @export var free_fall_state: State
 @export var robot_type: GameManager.RobotType = GameManager.RobotType.BLUE
+@export var camera_limit_bottom: int = 720
 
 var is_locally_controlled: bool = false
 var player_name: String
-var synced_global_position: Vector2 = self.global_position
+var player_id: int
 
 @onready var movement_state_machine: StateMachine = $MovementStateMachine
 @onready var control_state_machine: StateMachine = $ControlStateMachine
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var multiplayer_data: RobotMultiplayerData = $RobotMultiplayerData
 
 func _ready():
 	movement_state_machine.initialize_for(self)

@@ -11,5 +11,5 @@ func process_physics(delta: float) -> State:
 		controlled_node.velocity.x = move_toward(controlled_node.velocity.x, \
 			0.0, FRICTION * delta)
 
-	controlled_node.synced_global_position = controlled_node.global_position
+	controlled_node.multiplayer_data.global_position = controlled_node.global_position
 	return null

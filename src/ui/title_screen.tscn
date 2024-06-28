@@ -1,0 +1,102 @@
+[gd_scene load_steps=8 format=3 uid="uid://cq4vhf2376coa"]
+
+[ext_resource type="Texture2D" uid="uid://bv6uex3waolmo" path="res://assets/backgrounds/hill_scenery_layers/sky.png" id="1_sd417"]
+[ext_resource type="Script" path="res://src/ui/title_screen.gd" id="1_sjujn"]
+[ext_resource type="PackedScene" uid="uid://b43vunqwc74py" path="res://src/ui/play_screen.tscn" id="2_2hlq4"]
+[ext_resource type="Texture2D" uid="uid://dtv7fitcd4i7e" path="res://assets/ui/Logo.png" id="2_t744n"]
+[ext_resource type="Texture2D" uid="uid://crpn67tkeirit" path="res://assets/ui/Robot Crusher Title Screen Icon.png" id="3_ei4lk"]
+[ext_resource type="PackedScene" uid="uid://celq8766hxbx8" path="res://src/ui/elements/main_menu_button.tscn" id="3_j7hyr"]
+[ext_resource type="PackedScene" uid="uid://bvp3ao1rt4338" path="res://src/world/world.tscn" id="3_ljwmg"]
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sjujn")
+play_screen = ExtResource("2_2hlq4")
+author_website = "https://jyotir.itch.io"
+game_website = "https://github.com/jyotiradityatiwary/robot-crusher"
+game_scene = ExtResource("3_ljwmg")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_sd417")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 80
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HSplitContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="GameTitleLogo" type="TextureRect" parent="MarginContainer/HSplitContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_t744n")
+expand_mode = 3
+
+[node name="PlayButton" parent="MarginContainer/HSplitContainer/VBoxContainer" instance=ExtResource("3_j7hyr")]
+layout_mode = 2
+text = "Play"
+
+[node name="OptionsButton" parent="MarginContainer/HSplitContainer/VBoxContainer" instance=ExtResource("3_j7hyr")]
+layout_mode = 2
+text = "Options"
+
+[node name="CreditsButton" parent="MarginContainer/HSplitContainer/VBoxContainer" instance=ExtResource("3_j7hyr")]
+layout_mode = 2
+text = "Credits"
+
+[node name="QuitButton" parent="MarginContainer/HSplitContainer/VBoxContainer" instance=ExtResource("3_j7hyr")]
+layout_mode = 2
+text = "Quit"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HeroImage" type="TextureRect" parent="MarginContainer/HSplitContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+texture = ExtResource("3_ei4lk")
+expand_mode = 3
+
+[node name="AuthorNameButton" parent="MarginContainer/HSplitContainer/VBoxContainer2" instance=ExtResource("3_j7hyr")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "by Jyotiraditya Tiwary"
+
+[node name="VersionButton" parent="MarginContainer/HSplitContainer/VBoxContainer2" instance=ExtResource("3_j7hyr")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "version 0.1.1"
+
+[connection signal="pressed" from="MarginContainer/HSplitContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HSplitContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HSplitContainer/VBoxContainer2/AuthorNameButton" to="." method="_on_author_name_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HSplitContainer/VBoxContainer2/VersionButton" to="." method="_on_version_button_pressed"]

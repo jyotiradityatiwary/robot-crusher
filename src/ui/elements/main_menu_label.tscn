@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://kyvdstcxwup5"]
+
+[ext_resource type="FontFile" uid="uid://cfusq7veoe0p6" path="res://assets/fonts/Neucha-Regular.ttf" id="1_v1pe6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_prm8g"]
+
+[node name="MainMenuLabel" type="RichTextLabel"]
+custom_minimum_size = Vector2(40, 40)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("1_v1pe6")
+theme_override_font_sizes/normal_font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxEmpty_prm8g")
+text = "Enter Text"
