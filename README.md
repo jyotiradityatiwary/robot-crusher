@@ -2,6 +2,8 @@
 
 Simple multiplayer game made in godot
 
+![Two robots, one is jumping](docs/images/screenshot.png)
+
 ## Credits
 
 This project uses the [Godot](https://godotengine.org/) game engine.
