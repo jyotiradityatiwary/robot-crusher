@@ -5,5 +5,8 @@
 - [x] main menu screen
 - [x] names above players
 - [ ] robot taking damage
-- [ ] health and dash charge bars
+- [x] health and dash charge bars
 - [ ] game over screen
+- [ ] handle disconnects
+- [ ] handle failiure to connect
+- [ ] add screenshots in readme.md

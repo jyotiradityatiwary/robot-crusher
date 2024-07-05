@@ -110,8 +110,6 @@ func announce_player_info() -> void:
 # Start game in all clients and host
 @rpc("authority", "call_local", "reliable", TransferChannels.SERVER_MESSAGES)
 func _start_game_on_client() -> void:
-	#################
-	print("yes")
 	var waiting_screen_node: Control = $/root/WaitingScreen
 	waiting_screen_node.get_parent().remove_child(waiting_screen_node)
 	waiting_screen_node.queue_free()

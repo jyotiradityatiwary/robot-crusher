@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@export var max_health: float = 100
 @export var local_controlled_state: State
 @export var free_fall_state: State
 @export var robot_type: GameManager.RobotType = GameManager.RobotType.BLUE
@@ -8,6 +9,10 @@ extends CharacterBody2D
 var is_locally_controlled: bool = false
 var player_name: String
 var player_id: int
+var health: float :
+	set (new_health) :
+		health = new_health
+		health_progress_bar.value = new_health
 
 @onready var movement_state_machine: StateMachine = $MovementStateMachine
 @onready var control_state_machine: StateMachine = $ControlStateMachine
@@ -15,9 +20,15 @@ var player_id: int
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var multiplayer_data: RobotMultiplayerData = $RobotMultiplayerData
 @onready var player_name_label: Label = $PlayerNameLabel
+@onready var health_progress_bar: ProgressBar = $HealthProgressBar
+@onready var dash_progress_bar: ProgressBar = $DashProgressBar
 
 func _ready():
 	player_name_label.text = self.player_name
+	
+	health_progress_bar.min_value = 0
+	health_progress_bar.max_value = max_health
+	health = max_health
 	
 	movement_state_machine.initialize_for(self)
 	control_state_machine.initialize_for(self)
@@ -40,3 +51,5 @@ func _unhandled_input(event):
 
 func set_is_facing_left(is_facing_left: bool):
 	sprite.flip_h = is_facing_left
+
+
