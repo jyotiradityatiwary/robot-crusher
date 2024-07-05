@@ -14,8 +14,11 @@ var player_id: int
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var multiplayer_data: RobotMultiplayerData = $RobotMultiplayerData
+@onready var player_name_label: Label = $PlayerNameLabel
 
 func _ready():
+	player_name_label.text = self.player_name
+	
 	movement_state_machine.initialize_for(self)
 	control_state_machine.initialize_for(self)
 	

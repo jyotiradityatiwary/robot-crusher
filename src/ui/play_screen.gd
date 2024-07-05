@@ -19,4 +19,11 @@ func _on_join_button_pressed():
 
 
 func _on_player_name_text_edit_text_set():
+	_set_player_name()
+
+
+func _on_player_name_text_edit_text_changed():
+	_set_player_name()
+
+func _set_player_name():
 	multiplayer_manager.player_name = player_name_text_edit.text

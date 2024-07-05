@@ -94,7 +94,6 @@ func start_game_for_everyone() -> void:
 	for player_id in game_manager.players:
 		# Get player object from array
 		var player_data: GameManager.GamePlayer = game_manager.players[player_id]
-		print("i am about to call spawn with args id=", player_id, ", pldata=", player_data)
 		multiplayer_spawner.spawn([player_id, player_data.name, player_data.robot_type])
 
 func announce_player_info() -> void:

@@ -7,7 +7,6 @@ func _enter_tree():
 	var robot_multiplayer_spawner: MultiplayerSpawner = $RobotMultiplayerSpawner
 	var spawn_marker: Marker2D = $SpawnMarker
 	robot_multiplayer_spawner.spawn_function = func _multi_spawn_func(data):
-		print("multiplayer spawn called with data=", data)
 		var player_id: int = data[0]
 		var player_name: String = data[1]
 		var robot_type: GameManager.RobotType = data[2]
@@ -31,6 +30,8 @@ func _enter_tree():
 		if player_node.is_locally_controlled:
 			var camera: Camera2D = Camera2D.new()
 			camera.limit_bottom = camera_limit_bottom
+			camera.position_smoothing_enabled = true
+			camera.position_smoothing_speed = 10.0
 			player_node.add_child(camera)
 		
 		return player_node
