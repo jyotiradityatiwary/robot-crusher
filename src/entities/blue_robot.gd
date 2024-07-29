@@ -5,16 +5,24 @@ extends CharacterBody2D
 @export var free_fall_state: State
 @export var robot_type: GameManager.RobotType = GameManager.RobotType.BLUE
 @export var camera_limit_bottom: int = 720
+@export var game_over_screen_scene: PackedScene
 
+# The following variables should be set up by whatever function sets up this
+# node
+# Probably the multiplayer_spawn function defined in World script
 var is_locally_controlled: bool = false
 var player_name: String
 var player_id: int
 var health: float :
 	set (new_health) :
 		multiplayer_data.health = new_health
+		
+		if health <= 0.0:
+			multiplayer_manager.kill_player(self, player_id)
 	get :
 		return multiplayer_data.health
 
+@onready var multiplayer_manager: MultiplayerManager = $/root/MultiplayerManager
 @onready var movement_state_machine: StateMachine = $MovementStateMachine
 @onready var control_state_machine: StateMachine = $ControlStateMachine
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -29,9 +37,7 @@ func _ready():
 	
 	health_progress_bar.min_value = 0
 	health_progress_bar.max_value = max_health
-	print('nig11')
 	health = max_health
-	print('nig22222')
 	
 	movement_state_machine.initialize_for(self)
 	control_state_machine.initialize_for(self)
@@ -56,9 +62,5 @@ func set_is_facing_left(is_facing_left: bool):
 	sprite.flip_h = is_facing_left
 
 
-
-
-func _on_hurt_area_area_entered(area: Area2D):
-	print("entered: ", area)
-	health -= 20
-	print('health reduced')
+func _on_hurt_area_area_entered(_area: Area2D):
+	self.health -= 20

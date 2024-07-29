@@ -1,7 +1,8 @@
-[gd_scene load_steps=27 format=3 uid="uid://gg7phinjmsaj"]
+[gd_scene load_steps=28 format=3 uid="uid://gg7phinjmsaj"]
 
 [ext_resource type="Texture2D" uid="uid://y1m8ucm10c7s" path="res://assets/robots/side_view/robot_blueDrive1.png" id="1_r5y52"]
 [ext_resource type="Script" path="res://src/entities/blue_robot.gd" id="1_yjd2e"]
+[ext_resource type="PackedScene" uid="uid://dpp6ljaglnnpn" path="res://src/ui/game_over_screen.tscn" id="2_aoyck"]
 [ext_resource type="Script" path="res://src/global/state_machine.gd" id="3_j1cek"]
 [ext_resource type="Script" path="res://src/global/states/freefall_state.gd" id="4_qktf7"]
 [ext_resource type="Script" path="res://src/global/states/sliding_state.gd" id="5_d0pim"]
@@ -105,7 +106,7 @@ size = Vector2(96, 78)
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6gp2x"]
 properties/0/path = NodePath("RobotMultiplayerData:health")
 properties/0/spawn = true
-properties/0/replication_mode = 2
+properties/0/replication_mode = 1
 properties/1/path = NodePath("RobotMultiplayerData:global_position")
 properties/1/spawn = true
 properties/1/replication_mode = 1
@@ -114,6 +115,7 @@ properties/1/replication_mode = 1
 script = ExtResource("1_yjd2e")
 local_controlled_state = NodePath("ControlStateMachine/LocalControlledState")
 free_fall_state = NodePath("MovementStateMachine/FreeFallState")
+game_over_screen_scene = ExtResource("2_aoyck")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -45)

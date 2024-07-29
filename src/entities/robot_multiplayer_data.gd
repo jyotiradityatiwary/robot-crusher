@@ -7,7 +7,6 @@ class_name RobotMultiplayerData
 @export var global_position: Vector2
 @export var health: float:
 	set (new_health) :
-		print("my parent is: ", parent)
 		if parent == null:
 			return
 		health = new_health

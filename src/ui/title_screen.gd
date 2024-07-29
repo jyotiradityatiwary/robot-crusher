@@ -7,7 +7,10 @@ extends Control
 @export var game_website: String
 
 @export_category("Multiplayer Manager")
+# These variables will be used to set up the multiplayer manager
 @export var game_scene: PackedScene
+@export_file('*.tscn') var game_over_scene_path: String
+@export_file('*.tscn') var title_scene_path: String
 
 @onready var play_button: Button = $MarginContainer/HSplitContainer/VBoxContainer/PlayButton
 
@@ -19,6 +22,8 @@ func _on_play_button_pressed():
 	var multiplayer_manager: MultiplayerManager = MultiplayerManager.new()
 	multiplayer_manager.name = "MultiplayerManager"
 	multiplayer_manager.game_scene = game_scene
+	multiplayer_manager.game_over_scene_path = game_over_scene_path
+	multiplayer_manager.title_scene_path = title_scene_path
 	# This is addedd to the tree before the next scene so that it stays at top
 	get_tree().root.add_child(multiplayer_manager)
 	

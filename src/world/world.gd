@@ -3,6 +3,9 @@ extends Node2D
 @export var camera_limit_bottom: int
 @export var spawn_marker_shift: Vector2
 
+# the following variables are to be initialized by whatever function sets up this level
+var game_over_scene: PackedScene
+
 func _enter_tree():
 	var robot_multiplayer_spawner: MultiplayerSpawner = $RobotMultiplayerSpawner
 	var spawn_marker: Marker2D = $SpawnMarker
@@ -35,3 +38,7 @@ func _enter_tree():
 			player_node.add_child(camera)
 		
 		return player_node
+
+func gamr_over():
+	get_parent().add_child(game_over_scene.instantiate())
+	queue_free()

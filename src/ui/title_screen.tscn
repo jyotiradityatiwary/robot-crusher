@@ -20,6 +20,8 @@ play_screen = ExtResource("2_2hlq4")
 author_website = "https://jyotir.itch.io"
 game_website = "https://github.com/jyotiradityatiwary/robot-crusher"
 game_scene = ExtResource("3_ljwmg")
+game_over_scene_path = "res://src/ui/game_over_screen.tscn"
+title_scene_path = "res://src/ui/title_screen.tscn"
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1

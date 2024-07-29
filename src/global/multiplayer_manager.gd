@@ -2,10 +2,14 @@ extends Node
 class_name MultiplayerManager
 
 ## Config Options
+# These variables are set by whatever function sets up this scene.
+# In this case, it would probably be the title screen.
 	# Must use this same compression mode on client also
-@export var server_compression_mode: ENetConnection.CompressionMode = \
+var server_compression_mode: ENetConnection.CompressionMode = \
 	ENetConnection.COMPRESS_NONE
-@export var game_scene: PackedScene
+var game_scene: PackedScene
+var game_over_scene_path: String
+var title_scene_path: String
 
 # Script wide constants
 	# RPC Transfer Channels
@@ -139,3 +143,32 @@ func initialize_plyaer_on_client( \
 		_robot_type: GameManager.RobotType \
 	) -> void:
 	game_manager.add_player(_id, GameManager.GamePlayer.new(_player_name, _robot_type))
+
+func kill_player(player_node: Node, multiplayer_id: int):
+	# because we are using MultiplayerSpawner, we only need to kill the node on
+	# the server and it will be synced across all peers
+	print("kill player called with args: ", player_node, ", ", multiplayer_id)
+	
+	if top_level_node.multiplayer.is_server():
+		player_node.queue_free()
+		go_to_game_over_screen.rpc_id(multiplayer_id)
+
+@rpc("authority", "call_local", "reliable", TransferChannels.SERVER_MESSAGES)
+func go_to_game_over_screen():
+	var game_scene_node: Node2D = $/root/World
+	$/root.add_child(load(game_over_scene_path).instantiate())
+	if not top_level_node.multiplayer.is_server():
+		# We cannot queue free the game on the server because this will make all
+		# other players despawn
+		game_scene_node.queue_free()
+
+@rpc("authority", "call_local", "reliable", TransferChannels.SERVER_MESSAGES)
+func reset_to_title_screen():
+	var root: Node = get_tree().root
+	var title_screen: Control = load(title_scene_path).instantiate()
+	# Connect title screen
+	root.add_child(title_screen)
+	# Remove all other children from root
+	for child: Node in root.get_children(false):
+		if child != title_screen:
+			child.queue_free()
