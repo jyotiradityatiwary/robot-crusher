@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://gg7phinjmsaj"]
+[gd_scene load_steps=27 format=3 uid="uid://gg7phinjmsaj"]
 
 [ext_resource type="Texture2D" uid="uid://y1m8ucm10c7s" path="res://assets/robots/side_view/robot_blueDrive1.png" id="1_r5y52"]
 [ext_resource type="Script" path="res://src/entities/blue_robot.gd" id="1_yjd2e"]
@@ -55,14 +55,6 @@ _data = {
 "move": SubResource("Animation_dbq6y")
 }
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6gp2x"]
-properties/0/path = NodePath("RobotMultiplayerData:health")
-properties/0/spawn = true
-properties/0/replication_mode = 2
-properties/1/path = NodePath("RobotMultiplayerData:global_position")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5tc6t"]
 bg_color = Color(0.0705882, 0.0705882, 0.0705882, 0.584314)
 corner_radius_top_left = 10
@@ -103,6 +95,20 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hxrb2"]
+size = Vector2(94, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u8x6e"]
+size = Vector2(96, 78)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6gp2x"]
+properties/0/path = NodePath("RobotMultiplayerData:health")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath("RobotMultiplayerData:global_position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="BlueRobot" type="CharacterBody2D" node_paths=PackedStringArray("local_controlled_state", "free_fall_state")]
 script = ExtResource("1_yjd2e")
@@ -158,14 +164,6 @@ libraries = {
 "": SubResource("AnimationLibrary_sleau")
 }
 
-[node name="RobotMultiplayerData" type="Node" parent="."]
-script = ExtResource("12_i7y4f")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="RobotMultiplayerData"]
-root_path = NodePath("../..")
-replication_interval = 0.01
-replication_config = SubResource("SceneReplicationConfig_6gp2x")
-
 [node name="PlayerNameLabel" type="Label" parent="."]
 offset_left = -0.5
 offset_top = -157.0
@@ -175,7 +173,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 theme_override_styles/normal = SubResource("StyleBoxFlat_5tc6t")
-text = "Nigru"
+text = "Anon"
 label_settings = SubResource("LabelSettings_ldpjq")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -199,3 +197,29 @@ theme_override_styles/background = SubResource("StyleBoxFlat_o2jck")
 theme_override_styles/fill = SubResource("StyleBoxFlat_lbj5n")
 max_value = 1.0
 show_percentage = false
+
+[node name="HitArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
+position = Vector2(0, -5.5)
+shape = SubResource("RectangleShape2D_hxrb2")
+
+[node name="HurtArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea"]
+position = Vector2(0, -52)
+shape = SubResource("RectangleShape2D_u8x6e")
+
+[node name="RobotMultiplayerData" type="Node" parent="."]
+script = ExtResource("12_i7y4f")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="RobotMultiplayerData"]
+root_path = NodePath("../..")
+replication_interval = 0.01
+replication_config = SubResource("SceneReplicationConfig_6gp2x")
+
+[connection signal="area_entered" from="HurtArea" to="." method="_on_hurt_area_area_entered"]

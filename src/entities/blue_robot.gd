@@ -11,8 +11,9 @@ var player_name: String
 var player_id: int
 var health: float :
 	set (new_health) :
-		health = new_health
-		health_progress_bar.value = new_health
+		multiplayer_data.health = new_health
+	get :
+		return multiplayer_data.health
 
 @onready var movement_state_machine: StateMachine = $MovementStateMachine
 @onready var control_state_machine: StateMachine = $ControlStateMachine
@@ -28,7 +29,9 @@ func _ready():
 	
 	health_progress_bar.min_value = 0
 	health_progress_bar.max_value = max_health
+	print('nig11')
 	health = max_health
+	print('nig22222')
 	
 	movement_state_machine.initialize_for(self)
 	control_state_machine.initialize_for(self)
@@ -53,3 +56,9 @@ func set_is_facing_left(is_facing_left: bool):
 	sprite.flip_h = is_facing_left
 
 
+
+
+func _on_hurt_area_area_entered(area: Area2D):
+	print("entered: ", area)
+	health -= 20
+	print('health reduced')
