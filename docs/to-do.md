@@ -7,6 +7,6 @@
 - [x] robot taking damage
 - [x] health and dash charge bars
 - [x] game over screen
-- [ ] handle disconnects
-- [ ] handle failiure to connect
+- [x] handle disconnects
+- [x] handle failiure to connect
 - [x] add screenshots in readme.md

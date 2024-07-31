@@ -9,11 +9,11 @@ extends Control
 func _ready():
 	if multiplayer_manager.top_level_node.multiplayer.is_server():
 		disconnect_button.text = 'Close Server'
-		info_label.text += '\n\n [center]You can restart the game or close the server. Note that any of the above actions will also affect the game for other players who may still be playing[/center]'
+		info_label.text += '\n\n[center]You can restart the game or close the server. Note that any of the above actions will also affect the game for other players who may still be playing[/center]'
 		restart_game_button.grab_focus()
 	else:
 		restart_game_button.hide()
-		info_label.text += '\n\n [center]You can wait for the host to restart the game, or disconnect from the server[/center]'
+		info_label.text += '\n\n[center]You can wait for the host to restart the game, or disconnect from the server[/center]'
 		disconnect_button.grab_focus()
 
 

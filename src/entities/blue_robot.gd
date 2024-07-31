@@ -18,7 +18,7 @@ var health: float :
 		multiplayer_data.health = new_health
 		
 		if health <= 0.0:
-			multiplayer_manager.kill_player(self, player_id)
+			multiplayer_manager.kill_player(self, player_id, 'health is zero')
 	get :
 		return multiplayer_data.health
 

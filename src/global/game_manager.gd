@@ -22,6 +22,7 @@ class GamePlayer:
 	var name: String
 	var robot_type: RobotType
 	var score: float
+	var node: Node
 	#static func create(_name: String, _robot_type: RobotType) -> GamePlayer:
 		#var game_player = GamePlayer.new()
 		#game_player.name = _name
@@ -33,6 +34,7 @@ class GamePlayer:
 		self.name = _name
 		self.robot_type = _robot_type
 		self.score = 0.0
+		self.node = null
 	
 	func _to_string() -> String:
 		return "GamePlayer(name=\"" + self.name + "\", robot_type=" + \
@@ -49,9 +51,20 @@ func add_player(id: int, game_player: GamePlayer) -> Error:
 	self.players[id] = game_player
 	return OK
 
-func remove_player_if_exists(id: int):
-	players.erase(id)
+func set_player_node(player_id: int, node: Node):
+	var player: GamePlayer = self.players.get(player_id)
+	player.node = node
 
+func get_player_node(player_id: int) -> Node:
+	var player: GamePlayer = self.players.get(player_id)
+	return player.node
+
+# Returns true if the player was present in the dictionary and was
+# successfully deleted
+func remove_player_if_exists(id: int) -> bool:
+	return players.erase(id)
+
+# Creates error
 func remove_player(id: int):
-	if not players.erase(id):
+	if not remove_player_if_exists(id):
 		push_error("Error: Could not remove player because player does not exist")

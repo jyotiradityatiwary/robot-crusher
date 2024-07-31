@@ -99,6 +99,8 @@ theme_override_font_sizes/font_size = 24
 text = "version 0.1.1"
 
 [connection signal="pressed" from="MarginContainer/HSplitContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HSplitContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HSplitContainer/VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HSplitContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HSplitContainer/VBoxContainer2/AuthorNameButton" to="." method="_on_author_name_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HSplitContainer/VBoxContainer2/VersionButton" to="." method="_on_version_button_pressed"]

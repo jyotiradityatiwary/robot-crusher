@@ -41,3 +41,11 @@ func _on_version_button_pressed():
 
 func _initialize_multiplayer_manager():
 	pass
+
+
+func _on_options_button_pressed():
+	OS.alert('This screen has not yet been implemented', 'Work in Progress') # Replace with function body.
+
+
+func _on_credits_button_pressed():
+	OS.alert('This screen has not yet been implemented', 'Work in Progress') # Replace with function body.

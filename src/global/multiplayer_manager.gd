@@ -18,6 +18,7 @@ const SERVER_PEER_ID = 1
 
 # Script wide variables
 var is_server_hosted: bool = false
+var is_game_started: bool = false
 var game_manager: GameManager
 
 # Properties for the player using current device. Have default values but should
@@ -30,31 +31,36 @@ var top_level_node: Node
 
 func _ready() -> void:
 	top_level_node = get_parent()
-	top_level_node.multiplayer.peer_connected.connect(peer_connected)
-	top_level_node.multiplayer.peer_disconnected.connect(peer_disconnected)
-	top_level_node.multiplayer.connected_to_server.connect(connected_to_server)
-	top_level_node.multiplayer.connection_failed.connect(connection_failed)
-	top_level_node.multiplayer.server_disconnected.connect(server_disconnected)
+	top_level_node.multiplayer.peer_connected.connect(_on_peer_connected)
+	top_level_node.multiplayer.peer_disconnected.connect(_on_peer_disconnected)
+	top_level_node.multiplayer.connected_to_server.connect(_on_connected_to_server)
+	top_level_node.multiplayer.connection_failed.connect(_on_connection_failed)
+	top_level_node.multiplayer.server_disconnected.connect(_on_server_disconnected)
 	game_manager = GameManager.new()
 
 func _exit_tree() -> void:
 	game_manager.free()
 
-func peer_connected(id: int) -> void:
+func _on_peer_connected(id: int) -> void:
 	print("Peer Connected. id = ", id)
 
-func peer_disconnected(id: int) -> void:
+func _on_peer_disconnected(id: int) -> void:
 	print("Peer Disconnected. id = ", id)
+	remove_player_for_everyone(id)
 
-func connected_to_server() -> void:
+func _on_connected_to_server() -> void:
 	print("Connected to Server")
 	announce_player_info()
 
-func connection_failed() -> void:
+func _on_connection_failed() -> void:
 	print("Connection Failed")
+	OS.alert('Could not connect to server', 'Connection Error')
 
-func server_disconnected() -> void:
+func _on_server_disconnected() -> void:
 	print("Server Disconnected")
+	OS.alert('Lost connection to server. Returning to title screen...', 'Connection Error')
+	reset_to_title_screen()
+	return
 
 # This function is intended to be called from controlling parent script.
 # This starts a server on the current device and waits for connections
@@ -63,6 +69,8 @@ func host_server(server_port: int, server_max_clients: int) -> void:
 	var error: Error = peer.create_server(server_port, server_max_clients)
 	if error != OK :
 		print("Error: Could not create server. details: ", error)
+		OS.alert('Could not create server. Returning to title screen...', 'Connection Error')
+		reset_to_title_screen()
 		return
 	
 	peer.get_host().compress(server_compression_mode)
@@ -77,7 +85,10 @@ func join_server(server_address, server_port: int) -> void:
 	var peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
 	var error: Error = peer.create_client(server_address, server_port)
 	if error != OK:
-		print("Error: Could not create client. details: ", error)
+		print('Error: Could not create client. details: ', error)
+		OS.alert('Could not connect to server. Returning to title screen...', 'Connection Error')
+		reset_to_title_screen()
+		return
 	peer.get_host().compress(server_compression_mode)
 	top_level_node.multiplayer.set_multiplayer_peer(peer)
 
@@ -88,17 +99,19 @@ func start_game_for_everyone() -> void:
 	if not top_level_node.multiplayer.is_server():
 		print("Error: Only server can start the game. We are not a server.")
 		return
-
+	
 	_start_game_on_client.rpc()
 	
 	var game_scene_node: Node2D = $/root/World
 	var multiplayer_spawner: MultiplayerSpawner = game_scene_node.find_child("RobotMultiplayerSpawner", false)
 	
 	## Spawn and setup a player for each peer
+	## These spawns are synchronized on each peer's game by MultiplayerSynchronizer
 	for player_id in game_manager.players:
 		# Get player object from array
 		var player_data: GameManager.GamePlayer = game_manager.players[player_id]
-		multiplayer_spawner.spawn([player_id, player_data.name, player_data.robot_type])
+		var player_node: Node = multiplayer_spawner.spawn([player_id, player_data.name, player_data.robot_type])
+		game_manager.set_player_node(player_id, player_node)
 
 func announce_player_info() -> void:
 	if top_level_node.multiplayer.is_server():
@@ -119,6 +132,7 @@ func _start_game_on_client() -> void:
 	waiting_screen_node.queue_free()
 	var game_scene_node: Node2D = game_scene.instantiate()
 	get_tree().root.add_child(game_scene_node)
+	is_game_started = true
 
 # The client calls this whenever it connects to the server
 @rpc("any_peer", "call_remote", "reliable", TransferChannels.SERVER_MESSAGES)
@@ -132,11 +146,11 @@ func initialize_player_on_server( \
 		var player: GameManager.GamePlayer = game_manager.players[player_id]
 		initialize_plyaer_on_client.rpc_id(_id, player_id, player.name, player.robot_type)
 	# Add player on the server
-	game_manager.add_player(_id, GameManager.GamePlayer.new(_player_name, _robot_type))
 	initialize_plyaer_on_client.rpc(_id, _player_name, _robot_type)
 
-# Server calls this to all clients after a new client connects to server
-@rpc("authority", "call_remote", "reliable", TransferChannels.SERVER_MESSAGES)
+# Server calls this to all clients (including server) after a new client
+# connects to server
+@rpc("authority", "call_local", "reliable", TransferChannels.SERVER_MESSAGES)
 func initialize_plyaer_on_client( \
 		_id: int, \
 		_player_name: String, \
@@ -144,14 +158,15 @@ func initialize_plyaer_on_client( \
 	) -> void:
 	game_manager.add_player(_id, GameManager.GamePlayer.new(_player_name, _robot_type))
 
-func kill_player(player_node: Node, multiplayer_id: int):
+func kill_player(player_node: Node, player_id: int, reason: String):
 	# because we are using MultiplayerSpawner, we only need to kill the node on
 	# the server and it will be synced across all peers
-	print("kill player called with args: ", player_node, ", ", multiplayer_id)
+	print("kill player with id=", player_id, ", node=", player_node, 'for reason=', reason)
 	
 	if top_level_node.multiplayer.is_server():
 		player_node.queue_free()
-		go_to_game_over_screen.rpc_id(multiplayer_id)
+		# Player id is same as multiplayer peer id
+		go_to_game_over_screen.rpc_id(player_id)
 
 @rpc("authority", "call_local", "reliable", TransferChannels.SERVER_MESSAGES)
 func go_to_game_over_screen():
@@ -172,3 +187,10 @@ func reset_to_title_screen():
 	for child: Node in root.get_children(false):
 		if child != title_screen:
 			child.queue_free()
+
+func remove_player_for_everyone(player_id: int):
+	if is_game_started:
+		var player_node: Node = game_manager.get_player_node(player_id)
+		kill_player(player_node, player_id, 'Peer disconnected')
+
+	game_manager.remove_player_if_exists(player_id)
