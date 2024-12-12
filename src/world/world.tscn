@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bvp3ao1rt4338"]
+[gd_scene load_steps=9 format=3 uid="uid://bvp3ao1rt4338"]
 
 [ext_resource type="Texture2D" uid="uid://bv6uex3waolmo" path="res://assets/backgrounds/hill_scenery_layers/sky.png" id="1_quxp3"]
 [ext_resource type="Script" path="res://src/world/world.gd" id="1_r4ups"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bvdhmf6yx0131" path="res://assets/backgrounds/hill_scenery_layers/background_hills.png" id="3_63f3q"]
 [ext_resource type="Texture2D" uid="uid://cs3yg28cih417" path="res://assets/backgrounds/hill_scenery_layers/middle_part.png" id="4_j20hf"]
 [ext_resource type="Texture2D" uid="uid://f76vt0endg73" path="res://assets/backgrounds/hill_scenery_layers/foreground.png" id="5_da3jj"]
+[ext_resource type="PackedScene" uid="uid://cdtgy4cou3ijl" path="res://src/ui/touch_controls.tscn" id="8_ejb8j"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_r4ups")
@@ -65,4 +66,8 @@ layer_0/tile_data = PackedInt32Array(589824, 131073, 0, 589825, 131073, 0, 58982
 [node name="SpawnMarker" type="Marker2D" parent="."]
 
 [node name="RobotMultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-spawn_path = NodePath("..")
+spawn_path = NodePath("../PlayerLayer")
+
+[node name="PlayerLayer" type="Node2D" parent="."]
+
+[node name="TouchControls" parent="." instance=ExtResource("8_ejb8j")]

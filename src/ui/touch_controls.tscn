@@ -1,0 +1,58 @@
+[gd_scene load_steps=11 format=3 uid="uid://cdtgy4cou3ijl"]
+
+[ext_resource type="Script" path="res://src/ui/touch_controls.gd" id="1_0i5ym"]
+[ext_resource type="Texture2D" uid="uid://bxkvwjj6todk3" path="res://assets/ui/kenney_onscreen-controls/Sprites/transparent-dark/transparentDark24.png" id="2_x80ff"]
+[ext_resource type="Texture2D" uid="uid://b8b8dvcvctpko" path="res://assets/ui/kenney_onscreen-controls/Sprites/line-dark/lineDark21.png" id="3_8q86s"]
+[ext_resource type="Texture2D" uid="uid://deayt0fvpa6bm" path="res://assets/ui/kenney_onscreen-controls/Sprites/transparent-dark/transparentDark47.png" id="4_na110"]
+[ext_resource type="Texture2D" uid="uid://bs3kdxi0a8gtd" path="res://assets/ui/kenney_onscreen-controls/Sprites/line-dark/lineDark44.png" id="5_udcrt"]
+[ext_resource type="Texture2D" uid="uid://besodxpoknp8" path="res://assets/ui/kenney_onscreen-controls/Sprites/transparent-dark/transparentDark05.png" id="6_imwuj"]
+[ext_resource type="Texture2D" uid="uid://b3ad1qpfoywc4" path="res://assets/ui/kenney_onscreen-controls/Sprites/transparent-dark/transparentDark09.png" id="7_3oiwb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_21eu8"]
+radius = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ffc3d"]
+radius = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6uu0f"]
+radius = 160.0
+
+[node name="TouchControls" type="CanvasLayer" node_paths=PackedStringArray("joystick_root_node", "stick_node", "jump_button")]
+script = ExtResource("1_0i5ym")
+joystick_root_node = NodePath("MovementTouchScreenButton")
+stick_node = NodePath("MovementTouchScreenButton/JoystickCenterSprite2D")
+jump_button = NodePath("JumpTouchScreenButton")
+move_right_action = &"move_right"
+move_left_action = &"move_left"
+move_down_action = &"move_down"
+move_up_action = &"move_up"
+jump_action = &"jump"
+
+[node name="JumpTouchScreenButton" type="TouchScreenButton" parent="."]
+position = Vector2(1055, 339)
+scale = Vector2(2, 2)
+texture_normal = ExtResource("2_x80ff")
+texture_pressed = ExtResource("3_8q86s")
+shape = SubResource("CircleShape2D_21eu8")
+action = "jump"
+
+[node name="DashTouchScreenButton" type="TouchScreenButton" parent="."]
+position = Vector2(886, 515)
+scale = Vector2(2, 2)
+texture_normal = ExtResource("4_na110")
+texture_pressed = ExtResource("5_udcrt")
+shape = SubResource("CircleShape2D_ffc3d")
+action = "dash"
+
+[node name="MovementTouchScreenButton" type="TouchScreenButton" parent="."]
+position = Vector2(59, 454)
+scale = Vector2(1.5, 1.5)
+texture_normal = ExtResource("6_imwuj")
+shape = SubResource("CircleShape2D_6uu0f")
+
+[node name="JoystickCenterSprite2D" type="Sprite2D" parent="MovementTouchScreenButton"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_3oiwb")
+offset = Vector2(160, 160)
+
+[connection signal="released" from="MovementTouchScreenButton" to="." method="_on_movement_touch_screen_button_released"]
