@@ -1,17 +1,30 @@
 extends Control
 
 @export var waiting_screen: PackedScene
-
-const SERVER_PORT: int = 8910
-const SERVER_MAX_CLIENTS: int = 4
+@export var join_server_button: Button
+@export var ip_text_edit: TextEdit
+@export var port_text_edit: TextEdit
 
 @onready var multiplayer_manager: MultiplayerManager = $/root/MultiplayerManager
-@onready var join_server_button: Button = $MarginContainer/VBoxContainer/JoinServerButton
 
 func _ready():
 	join_server_button.grab_focus()
 
 func _on_join_server_button_pressed():
-	var server_ip_addr = $MarginContainer/VBoxContainer/HSplitContainer/IPAddrTextEdit.text
-	multiplayer_manager.join_server(server_ip_addr, SERVER_PORT)
+	# Read port number
+	var port_text: String = port_text_edit.text
+	if not port_text.is_valid_int():
+		OS.alert("Port must be an integer", "Invalid Input")
+		return
+	var port: int = port_text.to_int()
+	if port < 0 or port > 65535:
+		OS.alert("Port number out of range. Pick a number between 1024 and 65535", "Invalid Input")
+		return
+	if port < 1024:
+		OS.alert("Don't use privileged ports please (port numbers less than 1024 are reserved for system use)", "Invalid Input")
+		return
+	
+	# Read IP Address
+	var server_ip_addr = ip_text_edit.text
+	multiplayer_manager.join_server(server_ip_addr, port)
 	get_tree().change_scene_to_packed(waiting_screen)

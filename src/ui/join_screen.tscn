@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://3af0m2s4xitx" path="res://src/ui/elements/main_menu_text_edit.tscn" id="4_il5wu"]
 [ext_resource type="PackedScene" uid="uid://celq8766hxbx8" path="res://src/ui/elements/main_menu_button.tscn" id="5_tumtu"]
 
-[node name="PlayScreen" type="Control"]
+[node name="JoinScreen" type="Control" node_paths=PackedStringArray("join_server_button", "ip_text_edit", "port_text_edit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +17,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_v1p7m")
 waiting_screen = ExtResource("2_cx410")
+join_server_button = NodePath("MarginContainer/VBoxContainer/JoinServerButton")
+ip_text_edit = NodePath("MarginContainer/VBoxContainer/VBoxContainer/HSplitContainer/IPAddrTextEdit")
+port_text_edit = NodePath("MarginContainer/VBoxContainer/VBoxContainer/HSplitContainer2/PortTextEdit")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
@@ -51,20 +54,37 @@ alignment = 1
 layout_mode = 2
 text = "[center]Join Game[/center]"
 
-[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 4
-theme_override_constants/separation = 30
 
-[node name="MainMenuLabel" parent="MarginContainer/VBoxContainer/HSplitContainer" instance=ExtResource("3_h6sow")]
-custom_minimum_size = Vector2(200, 40)
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 4
-text = "ToDo: Input IP"
 
-[node name="IPAddrTextEdit" parent="MarginContainer/VBoxContainer/HSplitContainer" instance=ExtResource("4_il5wu")]
+[node name="MainMenuLabel" parent="MarginContainer/VBoxContainer/VBoxContainer/HSplitContainer" instance=ExtResource("3_h6sow")]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Server IP Address"
+
+[node name="IPAddrTextEdit" parent="MarginContainer/VBoxContainer/VBoxContainer/HSplitContainer" instance=ExtResource("4_il5wu")]
 layout_mode = 2
 text = "127.0.0.1"
+
+[node name="HSplitContainer2" type="HSplitContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MainMenuLabel" parent="MarginContainer/VBoxContainer/VBoxContainer/HSplitContainer2" instance=ExtResource("3_h6sow")]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Port:"
+
+[node name="PortTextEdit" parent="MarginContainer/VBoxContainer/VBoxContainer/HSplitContainer2" instance=ExtResource("4_il5wu")]
+custom_minimum_size = Vector2(256, 64)
+layout_mode = 2
+text = "8888"
 
 [node name="JoinServerButton" parent="MarginContainer/VBoxContainer" instance=ExtResource("5_tumtu")]
 layout_mode = 2
