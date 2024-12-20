@@ -1,11 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://b43vunqwc74py"]
+[gd_scene load_steps=7 format=3 uid="uid://b43vunqwc74py"]
 
 [ext_resource type="Script" path="res://src/ui/play_screen.gd" id="1_52m3i"]
 [ext_resource type="PackedScene" uid="uid://xbojp1nj4v2u" path="res://src/ui/elements/page_title.tscn" id="2_rohh1"]
-[ext_resource type="PackedScene" uid="uid://bhg46wp1i8q77" path="res://src/ui/host_screen.tscn" id="2_s7ggg"]
 [ext_resource type="Texture2D" uid="uid://bv6uex3waolmo" path="res://assets/backgrounds/hill_scenery_layers/sky.png" id="2_tic3p"]
 [ext_resource type="PackedScene" uid="uid://kyvdstcxwup5" path="res://src/ui/elements/main_menu_label.tscn" id="3_b1kh3"]
-[ext_resource type="PackedScene" uid="uid://vo843d3e2pio" path="res://src/ui/join_screen.tscn" id="3_vvugb"]
 [ext_resource type="PackedScene" uid="uid://celq8766hxbx8" path="res://src/ui/elements/main_menu_button.tscn" id="4_la0u8"]
 [ext_resource type="PackedScene" uid="uid://3af0m2s4xitx" path="res://src/ui/elements/main_menu_text_edit.tscn" id="7_8vtke"]
 
@@ -17,8 +15,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_52m3i")
-host_screen = ExtResource("2_s7ggg")
-join_screen = ExtResource("3_vvugb")
+host_screen = "res://src/ui/host_screen.tscn"
+join_screen = "res://src/ui/join_screen.tscn"
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1

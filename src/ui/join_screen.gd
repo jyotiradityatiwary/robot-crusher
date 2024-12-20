@@ -1,11 +1,12 @@
 extends Control
 
-@export var waiting_screen: PackedScene
+@export_file('*.tscn') var waiting_screen: String
 @export var join_server_button: Button
 @export var ip_text_edit: TextEdit
 @export var port_text_edit: TextEdit
 
-@onready var multiplayer_manager: MultiplayerManager = $/root/MultiplayerManager
+@onready var multiplayer_manager: MultiplayerManager = get_parent() \
+	.find_child("MultiplayerManager", false)
 
 func _ready():
 	join_server_button.grab_focus()
@@ -27,4 +28,5 @@ func _on_join_server_button_pressed():
 	# Read IP Address
 	var server_ip_addr = ip_text_edit.text
 	multiplayer_manager.join_server(server_ip_addr, port)
-	get_tree().change_scene_to_packed(waiting_screen)
+	get_parent().add_child(load(waiting_screen).instantiate())
+	queue_free()

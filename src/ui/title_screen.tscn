@@ -1,12 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cq4vhf2376coa"]
+[gd_scene load_steps=6 format=3 uid="uid://cq4vhf2376coa"]
 
 [ext_resource type="Texture2D" uid="uid://bv6uex3waolmo" path="res://assets/backgrounds/hill_scenery_layers/sky.png" id="1_sd417"]
 [ext_resource type="Script" path="res://src/ui/title_screen.gd" id="1_sjujn"]
-[ext_resource type="PackedScene" uid="uid://b43vunqwc74py" path="res://src/ui/play_screen.tscn" id="2_2hlq4"]
 [ext_resource type="Texture2D" uid="uid://dtv7fitcd4i7e" path="res://assets/ui/Logo.png" id="2_t744n"]
 [ext_resource type="Texture2D" uid="uid://crpn67tkeirit" path="res://assets/ui/Robot Crusher Title Screen Icon.png" id="3_ei4lk"]
 [ext_resource type="PackedScene" uid="uid://celq8766hxbx8" path="res://src/ui/elements/main_menu_button.tscn" id="3_j7hyr"]
-[ext_resource type="PackedScene" uid="uid://bvp3ao1rt4338" path="res://src/world/world.tscn" id="3_ljwmg"]
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
@@ -16,12 +14,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_sjujn")
-play_screen = ExtResource("2_2hlq4")
+play_screen_path = "res://src/ui/play_screen.tscn"
 author_website = "https://jyotir.itch.io"
 game_website = "https://github.com/jyotiradityatiwary/robot-crusher"
-game_scene = ExtResource("3_ljwmg")
-game_over_scene_path = "res://src/ui/game_over_screen.tscn"
-title_scene_path = "res://src/ui/title_screen.tscn"
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1

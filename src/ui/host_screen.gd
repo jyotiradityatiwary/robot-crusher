@@ -1,11 +1,12 @@
 extends Control
 
-@export var waiting_screen: PackedScene
+@export_file('*.tscn') var waiting_screen: String
 @export var start_server_button: Button
 @export var max_clients_text_edit: TextEdit
 @export var port_text_edit: TextEdit
 
-@onready var multiplayer_manager: MultiplayerManager = $/root/MultiplayerManager
+@onready var multiplayer_manager: MultiplayerManager = get_parent() \
+	.find_child("MultiplayerManager", false)
 
 func _ready():
 	start_server_button.grab_focus()
@@ -38,4 +39,5 @@ func _on_start_server_button_pressed():
 		return
 
 	multiplayer_manager.host_server(port, max_clients)
-	get_tree().change_scene_to_packed(waiting_screen)
+	get_parent().add_child(load(waiting_screen).instantiate())
+	queue_free()

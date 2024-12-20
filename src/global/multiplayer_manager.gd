@@ -5,11 +5,11 @@ class_name MultiplayerManager
 # These variables are set by whatever function sets up this scene.
 # In this case, it would probably be the title screen.
 	# Must use this same compression mode on client also
-var server_compression_mode: ENetConnection.CompressionMode = \
+@export var server_compression_mode: ENetConnection.CompressionMode = \
 	ENetConnection.COMPRESS_NONE
-var game_scene: PackedScene
-var game_over_scene_path: String
-var title_scene_path: String
+@export_file('*.tscn') var world_scene: String
+@export_file('*.tscn') var game_over_scene_path: String
+@export_file('*.tscn') var title_scene_path: String
 
 # Script wide constants
 	# RPC Transfer Channels
@@ -102,8 +102,8 @@ func start_game_for_everyone() -> void:
 	
 	_start_game_on_client.rpc()
 	
-	var game_scene_node: Node2D = $/root/World
-	var multiplayer_spawner: MultiplayerSpawner = game_scene_node.find_child("RobotMultiplayerSpawner", false)
+	var world_scene_node: Node2D = get_parent().find_child("World", false, false)
+	var multiplayer_spawner: MultiplayerSpawner = world_scene_node.find_child("RobotMultiplayerSpawner", false)
 	
 	## Spawn and setup a player for each peer
 	## These spawns are synchronized on each peer's game by MultiplayerSynchronizer
@@ -127,34 +127,33 @@ func announce_player_info() -> void:
 # Start game in all clients and host
 @rpc("authority", "call_local", "reliable", TransferChannels.SERVER_MESSAGES)
 func _start_game_on_client() -> void:
-	var waiting_screen_node: Control = $/root/WaitingScreen
-	waiting_screen_node.get_parent().remove_child(waiting_screen_node)
-	waiting_screen_node.queue_free()
-	var game_scene_node: Node2D = game_scene.instantiate()
-	get_tree().root.add_child(game_scene_node)
+	var world_scene_node: Node2D = load(world_scene).instantiate()
+	get_parent().add_child(world_scene_node)
+	# Close the waiting screen
+	get_parent().find_child("WaitingScreen", false, false).queue_free()
 	is_game_started = true
 
 # The client calls this whenever it connects to the server
 @rpc("any_peer", "call_remote", "reliable", TransferChannels.SERVER_MESSAGES)
 func initialize_player_on_server( \
-		_id: int, \
-		_player_name: String, \
-		_robot_type: GameManager.RobotType \
+		new_player_id: int, \
+		new_player_name: String, \
+		new_robot_type: GameManager.RobotType \
 	) -> void:
 	# Initialize existing players on the new peer
 	for player_id: int in game_manager.players:
 		var player: GameManager.GamePlayer = game_manager.players[player_id]
-		initialize_plyaer_on_client.rpc_id(_id, player_id, player.name, player.robot_type)
-	# Add player on the server
-	initialize_plyaer_on_client.rpc(_id, _player_name, _robot_type)
+		initialize_plyaer_on_client.rpc_id(new_player_id, player_id, player.name, player.robot_type)
+	# Add new player on existing peers
+	initialize_plyaer_on_client.rpc(new_player_id, new_player_name, new_robot_type)
 
 # Server calls this to all clients (including server) after a new client
 # connects to server
 @rpc("authority", "call_local", "reliable", TransferChannels.SERVER_MESSAGES)
-func initialize_plyaer_on_client( \
-		_id: int, \
-		_player_name: String, \
-		_robot_type: GameManager.RobotType \
+func initialize_plyaer_on_client(
+		_id: int,
+		_player_name: String,
+		_robot_type: GameManager.RobotType
 	) -> void:
 	game_manager.add_player(_id, GameManager.GamePlayer.new(_player_name, _robot_type))
 
@@ -170,12 +169,12 @@ func kill_player(player_node: Node, player_id: int, reason: String):
 
 @rpc("authority", "call_local", "reliable", TransferChannels.SERVER_MESSAGES)
 func go_to_game_over_screen():
-	var game_scene_node: Node2D = $/root/World
-	$/root.add_child(load(game_over_scene_path).instantiate())
+	var world_scene_node: Node2D = get_parent().find_child("World", false, false)
+	get_parent().add_child(load(game_over_scene_path).instantiate())
 	if not top_level_node.multiplayer.is_server():
 		# We cannot queue free the game on the server because this will make all
 		# other players despawn
-		game_scene_node.queue_free()
+		world_scene_node.queue_free()
 
 @rpc("authority", "call_local", "reliable", TransferChannels.SERVER_MESSAGES)
 func reset_to_title_screen():

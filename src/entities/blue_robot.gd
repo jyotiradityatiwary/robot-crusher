@@ -4,8 +4,6 @@ extends CharacterBody2D
 @export var local_controlled_state: State
 @export var free_fall_state: State
 @export var robot_type: GameManager.RobotType = GameManager.RobotType.BLUE
-@export var camera_limit_bottom: int = 720
-@export var game_over_screen_scene: PackedScene
 
 # The following variables should be set up by whatever function sets up this
 # node
@@ -22,7 +20,7 @@ var health: float :
 	get :
 		return multiplayer_data.health
 
-@onready var multiplayer_manager: MultiplayerManager = $/root/MultiplayerManager
+@onready var multiplayer_manager: MultiplayerManager = $/root/Game/MultiplayerManager
 @onready var movement_state_machine: StateMachine = $MovementStateMachine
 @onready var control_state_machine: StateMachine = $ControlStateMachine
 @onready var animation_player: AnimationPlayer = $AnimationPlayer

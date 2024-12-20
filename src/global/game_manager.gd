@@ -42,6 +42,7 @@ class GamePlayer:
 			")"
 
 var players: Dictionary = {}
+var lobby_player_ids: Array[int] = []
 
 func add_player(id: int, game_player: GamePlayer) -> Error:
 	if id in self.players:
@@ -49,6 +50,7 @@ func add_player(id: int, game_player: GamePlayer) -> Error:
 		return FAILED
 	
 	self.players[id] = game_player
+	self.lobby_player_ids.append(id)
 	return OK
 
 func set_player_node(player_id: int, node: Node):

@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bhg46wp1i8q77"]
+[gd_scene load_steps=7 format=3 uid="uid://bhg46wp1i8q77"]
 
 [ext_resource type="Script" path="res://src/ui/host_screen.gd" id="1_abftu"]
 [ext_resource type="Texture2D" uid="uid://bv6uex3waolmo" path="res://assets/backgrounds/hill_scenery_layers/sky.png" id="1_iq7f2"]
 [ext_resource type="PackedScene" uid="uid://xbojp1nj4v2u" path="res://src/ui/elements/page_title.tscn" id="2_ejty5"]
-[ext_resource type="PackedScene" uid="uid://baiw6grki3410" path="res://src/ui/waiting_screen.tscn" id="2_l48ey"]
 [ext_resource type="PackedScene" uid="uid://kyvdstcxwup5" path="res://src/ui/elements/main_menu_label.tscn" id="3_g34s1"]
 [ext_resource type="PackedScene" uid="uid://celq8766hxbx8" path="res://src/ui/elements/main_menu_button.tscn" id="5_bkgvy"]
 [ext_resource type="PackedScene" uid="uid://3af0m2s4xitx" path="res://src/ui/elements/main_menu_text_edit.tscn" id="6_dd6vj"]
@@ -16,7 +15,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_abftu")
-waiting_screen = ExtResource("2_l48ey")
+waiting_screen = "res://src/ui/waiting_screen.tscn"
 start_server_button = NodePath("MarginContainer/VBoxContainer/StartServerButton")
 max_clients_text_edit = NodePath("MarginContainer/VBoxContainer/VBoxContainer/HSplitContainer/MaxClientsTextEdit")
 port_text_edit = NodePath("MarginContainer/VBoxContainer/VBoxContainer/HSplitContainer2/PortTextEdit")

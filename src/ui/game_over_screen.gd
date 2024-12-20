@@ -1,6 +1,6 @@
 extends Control
 
-@onready var multiplayer_manager: MultiplayerManager = $/root/MultiplayerManager
+@onready var multiplayer_manager: MultiplayerManager = $/root/Game/MultiplayerManager
 @onready var disconnect_button: Button = $MarginContainer/VBoxContainer/HSplitContainer/DisconnectButton
 @onready var restart_game_button: Button = $MarginContainer/VBoxContainer/HSplitContainer/RestartGameButton
 @onready var info_label: RichTextLabel = $MarginContainer/VBoxContainer/InfoLabel

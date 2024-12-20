@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://3w2ns4bdjx1t"]
+
+[ext_resource type="Script" path="res://src/global/multiplayer_manager.gd" id="1_sfp68"]
+[ext_resource type="PackedScene" uid="uid://cq4vhf2376coa" path="res://src/ui/title_screen.tscn" id="2_topk6"]
+
+[node name="Game" type="Node"]
+
+[node name="MultiplayerManager" type="Node" parent="."]
+script = ExtResource("1_sfp68")
+world_scene = "res://src/world/world.tscn"
+game_over_scene_path = "res://src/ui/game_over_screen.tscn"
+title_scene_path = "res://src/ui/title_screen.tscn"
+
+[node name="TitleScreen" parent="." instance=ExtResource("2_topk6")]
