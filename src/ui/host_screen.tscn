@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bhg46wp1i8q77"]
 
-[ext_resource type="Script" path="res://src/ui/host_screen.gd" id="1_abftu"]
+[ext_resource type="Script" uid="uid://dcogd87xi7xrf" path="res://src/ui/host_screen.gd" id="1_abftu"]
 [ext_resource type="Texture2D" uid="uid://bv6uex3waolmo" path="res://assets/backgrounds/hill_scenery_layers/sky.png" id="1_iq7f2"]
 [ext_resource type="PackedScene" uid="uid://xbojp1nj4v2u" path="res://src/ui/elements/page_title.tscn" id="2_ejty5"]
 [ext_resource type="PackedScene" uid="uid://kyvdstcxwup5" path="res://src/ui/elements/main_menu_label.tscn" id="3_g34s1"]

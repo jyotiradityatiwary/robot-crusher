@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://celq8766hxbx8"]
 
 [ext_resource type="FontFile" uid="uid://cwcgrx4vm4bsb" path="res://assets/fonts/WalterTurncoat-Regular.ttf" id="1_87dpf"]
-[ext_resource type="Script" path="res://src/ui/elements/main_menu_button.gd" id="2_acqai"]
+[ext_resource type="Script" uid="uid://cwyxd6f1pyodj" path="res://src/ui/elements/main_menu_button.gd" id="2_acqai"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jxdu7"]
 

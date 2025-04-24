@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=4 uid="uid://bvp3ao1rt4338"]
 
 [ext_resource type="Texture2D" uid="uid://bv6uex3waolmo" path="res://assets/backgrounds/hill_scenery_layers/sky.png" id="1_quxp3"]
-[ext_resource type="Script" path="res://src/world/world.gd" id="1_r4ups"]
+[ext_resource type="Script" uid="uid://bii1n12de3eoa" path="res://src/world/world.gd" id="1_r4ups"]
 [ext_resource type="TileSet" uid="uid://bal4ylt84bg6v" path="res://src/world/world.tres" id="1_yw6ph"]
 [ext_resource type="Texture2D" uid="uid://df5gkejrecgl1" path="res://assets/backgrounds/hill_scenery_layers/clouds.png" id="2_nc7gc"]
 [ext_resource type="Texture2D" uid="uid://bvdhmf6yx0131" path="res://assets/backgrounds/hill_scenery_layers/background_hills.png" id="3_63f3q"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://3w2ns4bdjx1t"]
 
-[ext_resource type="Script" path="res://src/global/multiplayer_manager.gd" id="1_sfp68"]
+[ext_resource type="Script" uid="uid://cchgteehdl0vr" path="res://src/global/multiplayer_manager.gd" id="1_sfp68"]
 [ext_resource type="PackedScene" uid="uid://cq4vhf2376coa" path="res://src/ui/title_screen.tscn" id="2_topk6"]
 
 [node name="Game" type="Node"]

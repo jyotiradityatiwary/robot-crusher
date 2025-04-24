@@ -1,17 +1,17 @@
 [gd_scene load_steps=27 format=3 uid="uid://gg7phinjmsaj"]
 
 [ext_resource type="Texture2D" uid="uid://y1m8ucm10c7s" path="res://assets/robots/side_view/robot_blueDrive1.png" id="1_r5y52"]
-[ext_resource type="Script" path="res://src/entities/blue_robot.gd" id="1_yjd2e"]
-[ext_resource type="Script" path="res://src/global/state_machine.gd" id="3_j1cek"]
-[ext_resource type="Script" path="res://src/global/states/freefall_state.gd" id="4_qktf7"]
-[ext_resource type="Script" path="res://src/global/states/sliding_state.gd" id="5_d0pim"]
-[ext_resource type="Script" path="res://src/global/states/jumping_state.gd" id="6_xl3n5"]
-[ext_resource type="Script" path="res://src/global/states/dash_charging_state.gd" id="7_efqa4"]
-[ext_resource type="Script" path="res://src/global/state.gd" id="8_l62dp"]
-[ext_resource type="Script" path="res://src/global/states/local_controlled_state.gd" id="8_yq1rf"]
-[ext_resource type="Script" path="res://src/global/states/remote_controlled_state.gd" id="9_s6bkb"]
+[ext_resource type="Script" uid="uid://blrb28gv7cart" path="res://src/entities/blue_robot.gd" id="1_yjd2e"]
+[ext_resource type="Script" uid="uid://cuccp37nhwtkw" path="res://src/global/state_machine.gd" id="3_j1cek"]
+[ext_resource type="Script" uid="uid://c1fnihfselmid" path="res://src/global/states/freefall_state.gd" id="4_qktf7"]
+[ext_resource type="Script" uid="uid://bkuykq1w0ka4r" path="res://src/global/states/sliding_state.gd" id="5_d0pim"]
+[ext_resource type="Script" uid="uid://diqffeb2uyp8m" path="res://src/global/states/jumping_state.gd" id="6_xl3n5"]
+[ext_resource type="Script" uid="uid://vhuild8oebps" path="res://src/global/states/dash_charging_state.gd" id="7_efqa4"]
+[ext_resource type="Script" uid="uid://breavwh5n43cj" path="res://src/global/state.gd" id="8_l62dp"]
+[ext_resource type="Script" uid="uid://dumk2uktyf7up" path="res://src/global/states/local_controlled_state.gd" id="8_yq1rf"]
+[ext_resource type="Script" uid="uid://dskpgp86m6q5r" path="res://src/global/states/remote_controlled_state.gd" id="9_s6bkb"]
 [ext_resource type="Texture2D" uid="uid://8wyb015g4j4v" path="res://assets/robots/side_view/robot_blueDrive2.png" id="11_s7lvj"]
-[ext_resource type="Script" path="res://src/entities/robot_multiplayer_data.gd" id="12_i7y4f"]
+[ext_resource type="Script" uid="uid://o8t1j1leot0i" path="res://src/entities/robot_multiplayer_data.gd" id="12_i7y4f"]
 [ext_resource type="FontFile" uid="uid://cwcgrx4vm4bsb" path="res://assets/fonts/WalterTurncoat-Regular.ttf" id="13_eml1o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3y1r4"]
@@ -51,8 +51,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sleau"]
 _data = {
-"RESET": SubResource("Animation_3n6ok"),
-"move": SubResource("Animation_dbq6y")
+&"RESET": SubResource("Animation_3n6ok"),
+&"move": SubResource("Animation_dbq6y")
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5tc6t"]

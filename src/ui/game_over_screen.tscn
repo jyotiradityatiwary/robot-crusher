@@ -1,15 +1,15 @@
 [gd_scene load_steps=8 format=3 uid="uid://dpp6ljaglnnpn"]
 
 [ext_resource type="Texture2D" uid="uid://bv6uex3waolmo" path="res://assets/backgrounds/hill_scenery_layers/sky.png" id="1_7r6th"]
-[ext_resource type="Shader" path="res://src/ui/shaders/background_blur.gdshader" id="1_e1pgj"]
-[ext_resource type="Script" path="res://src/ui/game_over_screen.gd" id="1_tdpoi"]
+[ext_resource type="Shader" uid="uid://daufw7qekigx4" path="res://src/ui/shaders/background_blur.gdshader" id="1_e1pgj"]
+[ext_resource type="Script" uid="uid://bat74npni3a88" path="res://src/ui/game_over_screen.gd" id="1_tdpoi"]
 [ext_resource type="PackedScene" uid="uid://xbojp1nj4v2u" path="res://src/ui/elements/page_title.tscn" id="1_x2xwo"]
 [ext_resource type="PackedScene" uid="uid://kyvdstcxwup5" path="res://src/ui/elements/main_menu_label.tscn" id="2_tn7ck"]
 [ext_resource type="PackedScene" uid="uid://celq8766hxbx8" path="res://src/ui/elements/main_menu_button.tscn" id="3_74nxk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nysvi"]
 shader = ExtResource("1_e1pgj")
-shader_parameter/step = null
+shader_parameter/step = Vector2(0, 0)
 shader_parameter/radius = 10.0
 
 [node name="GameOverScreen" type="Control"]

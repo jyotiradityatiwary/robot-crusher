@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://cdtgy4cou3ijl"]
 
-[ext_resource type="Script" path="res://src/ui/touch_controls.gd" id="1_0i5ym"]
+[ext_resource type="Script" uid="uid://ck2ejcl0gx4uy" path="res://src/ui/touch_controls.gd" id="1_0i5ym"]
 [ext_resource type="Texture2D" uid="uid://bxkvwjj6todk3" path="res://assets/ui/kenney_onscreen-controls/Sprites/transparent-dark/transparentDark24.png" id="2_x80ff"]
 [ext_resource type="Texture2D" uid="uid://b8b8dvcvctpko" path="res://assets/ui/kenney_onscreen-controls/Sprites/line-dark/lineDark21.png" id="3_8q86s"]
 [ext_resource type="Texture2D" uid="uid://deayt0fvpa6bm" path="res://assets/ui/kenney_onscreen-controls/Sprites/transparent-dark/transparentDark47.png" id="4_na110"]

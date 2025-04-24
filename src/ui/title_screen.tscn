@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cq4vhf2376coa"]
 
 [ext_resource type="Texture2D" uid="uid://bv6uex3waolmo" path="res://assets/backgrounds/hill_scenery_layers/sky.png" id="1_sd417"]
-[ext_resource type="Script" path="res://src/ui/title_screen.gd" id="1_sjujn"]
+[ext_resource type="Script" uid="uid://bmbimbygc4eil" path="res://src/ui/title_screen.gd" id="1_sjujn"]
 [ext_resource type="Texture2D" uid="uid://dtv7fitcd4i7e" path="res://assets/ui/Logo.png" id="2_t744n"]
 [ext_resource type="Texture2D" uid="uid://crpn67tkeirit" path="res://assets/ui/Robot Crusher Title Screen Icon.png" id="3_ei4lk"]
 [ext_resource type="PackedScene" uid="uid://celq8766hxbx8" path="res://src/ui/elements/main_menu_button.tscn" id="3_j7hyr"]
